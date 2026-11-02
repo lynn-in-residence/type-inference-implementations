@@ -1,0 +1,26 @@
+{
+  "upstreamCommit": "c3c4634d1f2df5a69cab5fc6fa4cabb568000520",
+  "definitions": [
+    "twice : forall a. a -> (a -> a) -> a",
+    "flipped : forall a. (a -> a) -> a -> a",
+    "mono : (int -> int) -> int",
+    "const : forall a. forall b. a -> b -> a",
+    "phantom : forall a. int -> int"
+  ],
+  "fixtures": [
+    {"name":"identity-application","term":"id 1","paper":"int","prototype":"int"},
+    {"name":"known-before-lambda","term":"twice 1 (lambda x. x)","paper":"int","prototype":"int"},
+    {"name":"lambda-before-known","term":"flipped (lambda x. x) 1","paper":"reject","prototype":"reject","errorContains":"infer: unexpected case"},
+    {"name":"annotated-first-lambda","term":"flipped ((lambda x. x) : int -> int) 1","paper":"int","prototype":"int"},
+    {"name":"unapplied-poly-argument","term":"mono id","paper":"reject","prototype":"reject","errorContains":"ssub: unexpected case"},
+    {"name":"eta-repair","term":"mono (lambda x. id x)","paper":"int","prototype":"int"},
+    {"name":"explicit-instantiation-repair","term":"mono (id @ int)","paper":"int","prototype":"int"},
+    {"name":"curried-complete-call","term":"const true 1","paper":"bool","prototype":"bool"},
+    {"name":"curried-unresolved-result","term":"const true","paper":"reject","prototype":"reject"},
+    {"name":"impredicative-list","term":"single id","paper":"[forall a. a -> a]","prototype":"[forall a. a -> a]"},
+    {"name":"retain-poly-argument","term":"choose id","paper":"(forall a. a -> a) -> (forall a. a -> a)","prototype":"(forall a. a -> a) -> (forall a. a -> a)"},
+    {"name":"poly-result-applied","term":"id id 1","paper":"int","prototype":"int"},
+    {"name":"bare-lambda","term":"lambda x. x","paper":"reject","prototype":"reject","errorContains":"infer: unexpected case"},
+    {"name":"unused-quantifier","term":"phantom 1","paper":"int","prototype":"reject","errorContains":"No solution found","knownDiscrepancy":"Figure 8 AS-forall-L allows an unused quantifier to remain unsolved and be discarded; the prototype pattern requires ESvar (a solved entry)."}
+  ]
+}

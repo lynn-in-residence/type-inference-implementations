@@ -1,0 +1,8 @@
+polymorphic-identity	True
+bare-lambda-synthesis	error: cannot infer type
+alpha-equivalent-identities	True
+dependent-result-substitution	True
+valid-let-type-type	True
+invalid-let-annotation	True
+valid-let-identity	error: cannot infer type
+unbound-variable	error: lookUp

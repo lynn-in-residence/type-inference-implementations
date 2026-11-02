@@ -1,0 +1,84 @@
+{
+  "schema": "atlas-term-language-v1",
+  "core": [
+    "var",
+    "lambda",
+    "app",
+    "let",
+    "int",
+    "bool",
+    "pair"
+  ],
+  "extensions": {
+    "expression-annotation": [
+      "ann"
+    ],
+    "binder-annotation": [
+      "annotated-lambda"
+    ],
+    "freeze": [
+      "freeze"
+    ],
+    "explicit-type-application": [
+      "type-app"
+    ],
+    "records": [
+      "record",
+      "project"
+    ]
+  },
+  "typeTags": [
+    "tvar",
+    "Int",
+    "Bool",
+    "arrow",
+    "product",
+    "forall",
+    "record-type"
+  ],
+  "profiles": [
+    {
+      "id": "wand-1987-worked",
+      "origin": "paper",
+      "core": [
+        "var",
+        "lambda",
+        "app"
+      ],
+      "extensions": [],
+      "typeTags": [
+        "tvar",
+        "Int",
+        "Bool",
+        "arrow"
+      ],
+      "context": "monomorphic",
+      "source": "Wand 1987 §2 term/type grammars; §§3–4 worked simply typed calculus; Int/Bool name two permitted basic types",
+      "scope": "Worked calculus only; proposed extensions do not enlarge this row."
+    },
+    {
+      "id": "lynn-w-j-pure-core",
+      "origin": "Lynn reconstruction",
+      "core": [
+        "var",
+        "lambda",
+        "app",
+        "let",
+        "int",
+        "bool",
+        "pair"
+      ],
+      "extensions": [],
+      "typeTags": [
+        "tvar",
+        "Int",
+        "Bool",
+        "arrow",
+        "product"
+      ],
+      "context": "closed-only",
+      "source": "scripts/w-j.mjs and notes/w-j-roots.md",
+      "scope": "Declared toy AST fragment, not all of Milner's language or an author implementation. Review: not double-checked."
+    }
+  ]
+}

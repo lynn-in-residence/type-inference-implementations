@@ -1,0 +1,145 @@
+{
+  "schema": "ipf2022-native-type-controls-v1",
+  "origin": "Lynn source-rule reconstruction; not double-checked",
+  "source": "arXiv2203.01835v1 Figures9/11",
+  "typeLevelControlsOnly": true,
+  "noTermInference": true,
+  "noAuthorExecution": true,
+  "forallFirstControlPolicy": true,
+  "literalEmptySpineWitness": {
+    "inputContext": [],
+    "spine": [],
+    "head": {
+      "tag": "forall",
+      "name": "a",
+      "body": {
+        "tag": "up",
+        "body": {
+          "tag": "var",
+          "name": "a"
+        }
+      }
+    },
+    "derivations": [
+      {
+        "rules": [
+          "Aspinenil"
+        ],
+        "result": {
+          "tag": "forall",
+          "name": "a",
+          "body": {
+            "tag": "up",
+            "body": {
+              "tag": "var",
+              "name": "a"
+            }
+          }
+        },
+        "outputContext": []
+      },
+      {
+        "rules": [
+          "Aspinetypeabsin",
+          "Aspinenil"
+        ],
+        "result": {
+          "tag": "up",
+          "body": {
+            "tag": "ev",
+            "name": "w0"
+          }
+        },
+        "outputContext": [
+          {
+            "tag": "guess",
+            "name": "w0"
+          }
+        ]
+      }
+    ]
+  },
+  "assertions": 20,
+  "observations": [
+    {
+      "name": "negative identity specializes",
+      "value": true
+    },
+    {
+      "name": "monomorphic identity does not generalize",
+      "value": false
+    },
+    {
+      "name": "invariant thunk blocks identity specialization",
+      "value": false
+    },
+    {
+      "name": "invariant thunk blocks reverse specialization",
+      "value": false
+    },
+    {
+      "name": "typed id(id) returns polymorphic thunk",
+      "value": "↑(↓(∀a.(a→↑(a))))"
+    },
+    {
+      "name": "typed id(id) result is unambiguous",
+      "value": true
+    },
+    {
+      "name": "choose same polymorphic values",
+      "value": "↑(↓(∀a.(a→↑(a))))"
+    },
+    {
+      "name": "choose cannot silently specialize a thunk",
+      "value": true
+    },
+    {
+      "name": "native partial choose has no returned value",
+      "value": "arrow"
+    },
+    {
+      "name": "whole native revapp returns r",
+      "value": "↑(r)"
+    },
+    {
+      "name": "curried first call returns a value shape",
+      "value": "up"
+    },
+    {
+      "name": "curried first result remains ambiguous",
+      "value": false
+    },
+    {
+      "name": "annotation fixes curried first result",
+      "value": "↑(↓((↓((↓(∀a.(a→↑(a)))→↑(r)))→↑(r))))"
+    },
+    {
+      "name": "annotated returned function consumes poly",
+      "value": "↑(r)"
+    },
+    {
+      "name": "unused quantifier does not leave a result hole",
+      "value": true
+    },
+    {
+      "name": "older hole cannot capture a later rigid",
+      "value": true
+    },
+    {
+      "name": "same-depth quantifiers are shift-isomorphic",
+      "value": true
+    },
+    {
+      "name": "literal empty-spine rules give different result shapes",
+      "value": true
+    },
+    {
+      "name": "literal quantified input is well formed",
+      "value": true
+    },
+    {
+      "name": "literal opened result is well formed in extended context",
+      "value": true
+    }
+  ]
+}

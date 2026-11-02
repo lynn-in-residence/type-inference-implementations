@@ -1,0 +1,86 @@
+[
+  {
+    "id": "identity",
+    "source": "fun x -> x",
+    "accepted": true,
+    "signature": "'a. 'a → 'a",
+    "origin": "author Examples/simple.mlf id"
+  },
+  {
+    "id": "constant",
+    "source": "fun x -> fun y -> x",
+    "accepted": true,
+    "signature": "'a. 'a → ('b. 'b → 'a)",
+    "origin": "ICFP 2008 Figure 8 constant function"
+  },
+  {
+    "id": "id-id",
+    "source": "let id = fun x -> x in id id",
+    "accepted": true,
+    "signature": "'a. 'a → 'a",
+    "origin": "adapter identity instantiation"
+  },
+  {
+    "id": "choose-id",
+    "source": "let choose = fun x y -> if True then x else y in let id = fun x -> x in choose id",
+    "accepted": true,
+    "signature": "('b ≥ 'a. 'a → 'a). 'b → 'b",
+    "origin": "author Examples/simple.mlf choose_id; 2003 §2.1"
+  },
+  {
+    "id": "choose-two-instances",
+    "source": "let choose = fun x y -> if True then x else y in let id = fun x -> x in let c = choose id in let n = c (fun x -> x + 1) 3 in c (fun x -> x) True",
+    "accepted": true,
+    "signature": "bool",
+    "origin": "adapter extension of author choose_id"
+  },
+  {
+    "id": "shared-frontier",
+    "source": "fun y -> let k = fun x -> y in k 1",
+    "accepted": true,
+    "signature": "'a. 'a → 'a",
+    "origin": "adapter outer lambda variable retained through local let"
+  },
+  {
+    "id": "returned-polymorphism",
+    "source": "(fun x -> fun y -> x) 1",
+    "accepted": true,
+    "signature": "'a. 'a → int",
+    "origin": "adapter application of ICFP 2008 Figure 8 constant function"
+  },
+  {
+    "id": "omega-domain-annotation",
+    "source": "fun (x : 'a . 'a -> 'a) -> x x",
+    "accepted": true,
+    "signature": "('a. 'a → 'a) → ('b. 'b → 'b)",
+    "origin": "author Examples/simple.mlf omega"
+  },
+  {
+    "id": "omega-expression-annotation",
+    "source": "fun x -> (x : 'a . 'a -> 'a) x",
+    "accepted": true,
+    "signature": "('b = 'a. 'a → 'a). 'b → 'b",
+    "origin": "author Examples/simple.mlf omega2"
+  },
+  {
+    "id": "omega-unannotated",
+    "source": "fun x -> x x",
+    "accepted": false,
+    "signature": null,
+    "origin": "author Examples/errors.mlf cycle"
+  },
+  {
+    "id": "lambda-two-instances",
+    "source": "fun f -> let n = f 1 in f True",
+    "accepted": false,
+    "signature": null,
+    "origin": "adapter monomorphic lambda control"
+  },
+  {
+    "id": "annotated-lambda-two-instances",
+    "source": "fun (f : 'a . 'a -> 'a) -> let n = f 1 in f True",
+    "accepted": true,
+    "signature": "('a. 'a → 'a) → bool",
+    "origin": "adapter annotated lambda repair"
+  }
+]

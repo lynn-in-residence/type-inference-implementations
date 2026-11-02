@@ -1,0 +1,337 @@
+{
+  "boundary": "Unmodified pinned author inference; Simple-sub compactType pipeline; MLsub own scheme-subsumption oracle. No evaluation, benchmark, million-case rerun or equivalence theorem.",
+  "summary": "13 shared-syntax fixtures: 10 accepted by both, 3 rejected by both; 20 positive and 2 negative MLsub subsumption judgments. 1 empty-record front-end boundary; stable fresh-process observations.",
+  "negativeControl": {
+    "verdicts": [
+      "N",
+      "N"
+    ],
+    "stdout": "[N] int <: bool\n[N] bool <: int\n"
+  },
+  "fixtures": [
+    {
+      "id": "identity",
+      "origin": "TypingTests/basic",
+      "source": "fun x -> x",
+      "simple": {
+        "accepted": true,
+        "raw": "(α0 -> α0)",
+        "bounds": "",
+        "coalesced": "'a -> 'a",
+        "compact": "CompactTypeScheme(‹‹α0› -> ‹α0››,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹‹α0› -> ‹α0››,Map())",
+        "final": "'a -> 'a",
+        "mlsubSyntax": "a -> a"
+      },
+      "mlsub": {
+        "signature": "(a -> a)",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : (a -> a)\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] (a -> a) <: (a -> a)\n[Y] (a -> a) <: (a -> a)\n"
+      }
+    },
+    {
+      "id": "twice",
+      "origin": "TypingTests/basic; both papers' twice example",
+      "source": "fun f -> fun x -> f (f x)",
+      "simple": {
+        "accepted": true,
+        "raw": "(α0 -> (α1 -> α3))",
+        "bounds": "α0 <: (α2 -> α3) & (α1 -> α2)",
+        "coalesced": "'a ∧ ('b -> 'c) ∧ ('d -> 'b) -> 'd -> 'c",
+        "compact": "CompactTypeScheme(‹‹α0, ‹α2, α1› -> ‹α3, α2›› -> ‹‹α1› -> ‹α3›››,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹‹‹α3, α1› -> ‹α3›› -> ‹‹α1› -> ‹α3›››,Map())",
+        "final": "('a ∨ 'b -> 'a) -> 'b -> 'a",
+        "mlsubSyntax": "(a | b -> a) -> b -> a"
+      },
+      "mlsub": {
+        "signature": "((a -> (b & a)) -> (a -> b))",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : ((a -> (b & a)) -> (a -> b))\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] ((a -> (b & a)) -> (a -> b)) <: ((a -> (b & a)) -> (a -> b))\n[Y] ((a -> (b & a)) -> (a -> b)) <: ((a -> (b & a)) -> (a -> b))\n"
+      }
+    },
+    {
+      "id": "twice-constant",
+      "origin": "atlas specialization of twice; MLsub paper §2.4 constant function",
+      "source": "let twice = fun f -> fun x -> f (f x) in twice (fun z -> true)",
+      "simple": {
+        "accepted": true,
+        "raw": "α9",
+        "bounds": "α5 <: α8, α7 :> bool, α8 :> bool, α9 :> (α5 -> α7)",
+        "coalesced": "'a ∨ ('b ∧ 'c -> 'd ∨ bool)",
+        "compact": "CompactTypeScheme(‹α9, ‹α5, α8› -> ‹α7, bool››,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹‹› -> ‹bool››,Map())",
+        "final": "⊤ -> bool",
+        "mlsubSyntax": "Top -> bool"
+      },
+      "mlsub": {
+        "signature": "(Top -> bool)",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : (Top -> bool)\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] (Top -> bool) <: (Top -> bool)\n[Y] (Top -> bool) <: (Top -> bool)\n"
+      }
+    },
+    {
+      "id": "record-width",
+      "origin": "atlas extra-field extension of TypingTests/records",
+      "source": "(fun x -> x.f) {f = 42; extra = true}",
+      "simple": {
+        "accepted": true,
+        "raw": "α2",
+        "bounds": "α2 :> int",
+        "coalesced": "'a ∨ int",
+        "compact": "CompactTypeScheme(‹α2, int›,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹int›,Map())",
+        "final": "int",
+        "mlsubSyntax": "int"
+      },
+      "mlsub": {
+        "signature": "int",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : int\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] int <: int\n[Y] int <: int\n"
+      }
+    },
+    {
+      "id": "record-join",
+      "origin": "TypingTests/records",
+      "source": "if true then {a = 1; b = true} else {b = false; c = 42}",
+      "simple": {
+        "accepted": true,
+        "raw": "α3",
+        "bounds": "α3 :> {a: int, b: bool} | {b: bool, c: int}",
+        "coalesced": "'a ∨ {a: int, b: bool} ∨ {b: bool, c: int}",
+        "compact": "CompactTypeScheme(‹α3, {b: ‹bool›}›,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹{b: ‹bool›}›,Map())",
+        "final": "{b: bool}",
+        "mlsubSyntax": "{b: bool}"
+      },
+      "mlsub": {
+        "signature": "{b : bool}",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : {b : bool}\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] {b : bool} <: {b : bool}\n[Y] {b : bool} <: {b : bool}\n"
+      }
+    },
+    {
+      "id": "let-polymorphism",
+      "origin": "TypingTests/let-poly",
+      "source": "let f = fun x -> x in {a = f 0; b = f true}",
+      "simple": {
+        "accepted": true,
+        "raw": "{a: α2, b: α4}",
+        "bounds": "α2 :> int, α4 :> bool",
+        "coalesced": "{a: 'a ∨ int, b: 'b ∨ bool}",
+        "compact": "CompactTypeScheme(‹{a: ‹α2, int›, b: ‹α4, bool›}›,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹{a: ‹int›, b: ‹bool›}›,Map())",
+        "final": "{a: int, b: bool}",
+        "mlsubSyntax": "{a: int; b: bool}"
+      },
+      "mlsub": {
+        "signature": "{a : int, b : bool}",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : {a : int, b : bool}\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] {a : int, b : bool} <: {a : int, b : bool}\n[Y] {a : int, b : bool} <: {a : int, b : bool}\n"
+      }
+    },
+    {
+      "id": "scope-extrusion",
+      "origin": "TypingTests/let-poly; two-sided variable extrusion",
+      "source": "fun k -> let test = k (fun x -> let tmp = add x 1 in x) in test",
+      "simple": {
+        "accepted": true,
+        "raw": "(α0 -> α8)",
+        "bounds": "α0 <: ((α5 -> α6) -> α7), α5 <: int, α6 :> α5, α8 :> α7",
+        "coalesced": "'a ∧ (('b ∧ int -> 'c ∨ 'b) -> 'd) -> 'e ∨ 'd",
+        "compact": "CompactTypeScheme(‹‹α0, ‹‹α5, int› -> ‹α6, α5›› -> ‹α7›› -> ‹α8, α7››,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹‹‹‹α5, int› -> ‹α5›› -> ‹α7›› -> ‹α7››,Map())",
+        "final": "(('a ∧ int -> 'a) -> 'b) -> 'b",
+        "mlsubSyntax": "((a & int -> a) -> b) -> b"
+      },
+      "mlsub": {
+        "signature": "((((int & a) -> a) -> b) -> b)",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : ((((int & a) -> a) -> b) -> b)\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] ((((int & a) -> a) -> b) -> b) <: ((((int & a) -> a) -> b) -> b)\n[Y] ((((int & a) -> a) -> b) -> b) <: ((((int & a) -> a) -> b) -> b)\n"
+      }
+    },
+    {
+      "id": "self-application",
+      "origin": "TypingTests/self-app",
+      "source": "fun x -> x x",
+      "simple": {
+        "accepted": true,
+        "raw": "(α0 -> α1)",
+        "bounds": "α0 <: (α0 -> α1)",
+        "coalesced": "'a ∧ ('a -> 'b) -> 'b",
+        "compact": "CompactTypeScheme(‹‹α0, ‹α0› -> ‹α1›› -> ‹α1››,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹‹α0, ‹α0› -> ‹α1›› -> ‹α1››,Map())",
+        "final": "'a ∧ ('a -> 'b) -> 'b",
+        "mlsubSyntax": "a & (a -> b) -> b"
+      },
+      "mlsub": {
+        "signature": "(((a -> b) & a) -> b)",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : (((a -> b) & a) -> b)\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] (((a -> b) & a) -> b) <: (((a -> b) & a) -> b)\n[Y] (((a -> b) & a) -> b) <: (((a -> b) & a) -> b)\n"
+      }
+    },
+    {
+      "id": "recursive-record",
+      "origin": "TypingTests/recursion (from MLsub website)",
+      "source": "let rec recursive_monster = fun x -> {thing = x; self = recursive_monster x} in recursive_monster",
+      "simple": {
+        "accepted": true,
+        "raw": "α3",
+        "bounds": "α3 :> (α4 -> {thing: α4, self: α5}) <: (α4 -> α5), α5 :> {thing: α4, self: α5}",
+        "coalesced": "'a ∨ ('b -> {thing: 'b, self: ('d ∨ {thing: 'b, self: 'c}) as 'c})",
+        "compact": "CompactTypeScheme(‹α3, ‹α4› -> ‹{self: ‹α7›, thing: ‹α4›}››,TreeMap(α7 -> ‹α5, {self: ‹α7›, thing: ‹α4›}›))",
+        "simplifiedCompact": "CompactTypeScheme(‹‹α4› -> ‹{self: ‹α7›, thing: ‹α4›}››,Map(α7 -> ‹{self: ‹α7›, thing: ‹α4›}›))",
+        "final": "'a -> {self: 'b, thing: 'a} as 'b",
+        "mlsubSyntax": "a -> rec b = {self: b; thing: a}"
+      },
+      "mlsub": {
+        "signature": "(a -> {thing : a, self : (rec b = {thing : a, self : b})})",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : (a -> {thing : a, self : (rec b = {thing : a, self : b})})\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] (a -> (rec b = {self : b, thing : a})) <: (a -> {self : (rec b = {self : b, thing : a}), thing : a})\n[Y] (a -> {self : (rec b = {self : b, thing : a}), thing : a}) <: (a -> (rec b = {self : b, thing : a}))\n"
+      }
+    },
+    {
+      "id": "finite-nesting-regression",
+      "origin": "Simple-sub §6 reported MLsub simplifier bug; pinned minimization-disabled branch",
+      "source": "{u = 0; v = {w = {w = 0}}}",
+      "simple": {
+        "accepted": true,
+        "raw": "{u: int, v: {w: {w: int}}}",
+        "bounds": "",
+        "coalesced": "{u: int, v: {w: {w: int}}}",
+        "compact": "CompactTypeScheme(‹{u: ‹int›, v: ‹{w: ‹{w: ‹int›}›}›}›,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹{u: ‹int›, v: ‹{w: ‹{w: ‹int›}›}›}›,Map())",
+        "final": "{u: int, v: {w: {w: int}}}",
+        "mlsubSyntax": "{u: int; v: {w: {w: int}}}"
+      },
+      "mlsub": {
+        "signature": "{u : int, v : {w : {w : int}}}",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : {u : int, v : {w : {w : int}}}\n"
+      },
+      "mutualSubsumption": {
+        "verdicts": [
+          "Y",
+          "Y"
+        ],
+        "stdout": "[Y] {u : int, v : {w : {w : int}}} <: {u : int, v : {w : {w : int}}}\n[Y] {u : int, v : {w : {w : int}}} <: {u : int, v : {w : {w : int}}}\n"
+      }
+    },
+    {
+      "id": "empty-record",
+      "origin": "TypingTests/records; explicitly notes MLsub's Top output",
+      "source": "{}",
+      "simple": {
+        "accepted": true,
+        "raw": "{}",
+        "bounds": "",
+        "coalesced": "{}",
+        "compact": "CompactTypeScheme(‹{}›,TreeMap())",
+        "simplifiedCompact": "CompactTypeScheme(‹{}›,Map())",
+        "final": "{}",
+        "mlsubSyntax": "{}"
+      },
+      "mlsub": {
+        "parsed": false,
+        "exit": 2,
+        "stdout": "",
+        "stderr": "Fatal error: exception Parser.Make(L).MenhirBasics.Error\n"
+      },
+      "mutualSubsumption": null
+    },
+    {
+      "id": "bad-primitive",
+      "origin": "TypingTests/booleans",
+      "source": "succ true",
+      "simple": {
+        "accepted": false,
+        "error": "cannot constrain bool <: int"
+      },
+      "mlsub": {
+        "signature": "<type error>",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : <type error>\n"
+      },
+      "mutualSubsumption": null
+    },
+    {
+      "id": "missing-field",
+      "origin": "TypingTests/records",
+      "source": "{a = 123; b = true}.c",
+      "simple": {
+        "accepted": false,
+        "error": "missing field: c in {a: int, b: bool}"
+      },
+      "mlsub": {
+        "signature": "<type error>",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : <type error>\n"
+      },
+      "mutualSubsumption": null
+    },
+    {
+      "id": "scope-escape-rejected",
+      "origin": "TypingTests/let-poly",
+      "source": "(fun k -> k (fun x -> let tmp = add x 1 in x)) (fun f -> f true)",
+      "simple": {
+        "accepted": false,
+        "error": "cannot constrain bool <: int"
+      },
+      "mlsub": {
+        "signature": "<type error>",
+        "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : <type error>\n"
+      },
+      "mutualSubsumption": null
+    }
+  ]
+}

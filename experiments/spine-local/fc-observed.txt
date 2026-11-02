@@ -1,0 +1,23 @@
+Welcome to the type inference REPL of Fc. Type :q to quit.
+Available commands: :tree, :env, :examples, :tests, :define <name> : <type>
+> forall a. forall b. a -> b -> (a) * b
+> forall a. (int -> a) -> a
+> forall a. forall b. a -> (a -> b) -> b
+> Error: ERROR: infer: unexpected case
+  Function: infer
+  Term: λx. x
+  Context: ■
+> Error: ERROR: infer: unexpected case
+  Function: infer
+  Term: λx. x
+  Context: ■
+> Error: ERROR: infer: unexpected case
+  Function: infer
+  Term: λy. y
+  Context: ■
+> Error: ERROR: infer: unexpected case
+  Function: infer
+  Term: λy. y
+  Context: ■
+> int
+> Bye.

@@ -1,0 +1,388 @@
+{
+  "schema": "links-freezeml-upstream-specifications-v1",
+  "status": "Expected results authored upstream; not observed results.",
+  "revision": "5ed2fa544249624b31348a14ad8391af0cf8fdfe",
+  "tests": [
+    {
+      "name": "Polymorphic Instantiation (1)",
+      "code": "fun(x)(y) { y }",
+      "options": {
+        "stdout": "fun : forall a,b::Row,c::(Any,Any),d::Row.(a) -b-> (c::Any) -d-> c::Any"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (1•)",
+      "code": "$(fun(x)(y) { y })",
+      "options": {
+        "stdout": "fun : forall a,b::Row,c::(Any,Any),d::Row.(a) -b-> (c::Any) -d-> c::Any"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (2)",
+      "code": "choose(id)",
+      "options": {
+        "stdout": "fun : ((a) -b-> a) -c-> (a) -b-> a"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (2•)",
+      "code": "choose(~id)",
+      "options": {
+        "stdout": "fun : (forall a,b::Row.(a) -b-> a) -c-> forall a,b::Row.(a) -b-> a"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (3)",
+      "code": "choose([])(ids)",
+      "options": {
+        "stdout": "[] : [forall a,b::Row.(a) -b-> a]"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (4)",
+      "code": "fun(x : (forall a,e::Row. (a) -e-> a)) { x(x) }",
+      "options": {
+        "stdout": "fun : forall a::Row,b,c::Row.(forall d,e::Row.(d) -e-> d) -a-> (b) -c-> b"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (4•)",
+      "code": "fun(x : (forall a,e::Row. (a) -e-> a)) { x(~x) }",
+      "options": {
+        "stdout": "fun : forall a::Row.(forall b,c::Row.(b) -c-> b) -a-> forall b,c::Row.(b) -c-> b"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (5)",
+      "code": "id(auto)",
+      "options": {
+        "stdout": "fun : (forall a,b::Row.(a) -b-> a) -c-> forall d,e::Row.(d) -e-> d"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (6)",
+      "code": "id(auto')",
+      "options": {
+        "stdout": "fun : (forall a,b::Row.(a) -b-> a) -c-> (d) -e-> d"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (6•)",
+      "code": "id(~auto')",
+      "options": {
+        "stdout": "fun : forall a,b::Row,c::Row.(forall d,e::Row.(d) -e-> d) -b-> (a) -c-> a"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (7)",
+      "code": "choose(id)(auto)",
+      "options": {
+        "stdout": "fun : (forall a,b::Row.(a) -b-> a) -c-> forall a,b::Row.(a) -b-> a"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (8)",
+      "code": "choose(id)(auto')",
+      "options": {
+        "exit": "1",
+        "stderr": "@.*Type error:.*"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (9)",
+      "code": "tests/freezeml/a9.links",
+      "options": {
+        "filemode": "true",
+        "stdout": "fun : forall a,b::Row.(a) -b-> a"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (10)",
+      "code": "poly(~id)",
+      "options": {
+        "stdout": "(0, true) : (Int, Bool)"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (11)",
+      "code": "poly($(fun(x:_::(Unl,Any)) { x }))",
+      "options": {
+        "stdout": "(0, true) : (Int, Bool)"
+      }
+    },
+    {
+      "name": "Polymorphic Instantiation (12)",
+      "code": "id(poly)($(fun(x:_::(Unl,Any)) { x }))",
+      "options": {
+        "stdout": "(0, true) : (Int, Bool)"
+      }
+    },
+    {
+      "name": "Inference of Polymorphic Arguments (1)",
+      "code": "fun(f : (forall a,e::Row. (a) -e-> a)) { (f(1), f(true)) }",
+      "options": {
+        "stdout": "fun : forall a::Row.(forall b,c::Row.(b) -c-> b) -a-> (Int, Bool)"
+      }
+    },
+    {
+      "name": "Inference of Polymorphic Arguments (2)",
+      "code": "fun(xs : [forall a,e::Row. (a) -e-> a]) { poly(head(xs)) }",
+      "options": {
+        "stdout": "fun : forall a::Row.([forall b,c::Row.(b) -c-> b]) -a-> (Int, Bool)"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (1)",
+      "code": "length(ids)",
+      "options": {
+        "stdout": "1 : Int"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (2)",
+      "code": "tail(ids)",
+      "options": {
+        "stdout": "[] : [forall a,b::Row.(a) -b-> a]"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (3)",
+      "code": "head(ids)",
+      "options": {
+        "stdout": "fun : forall a,b::Row.(a) -b-> a"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (4)",
+      "code": "single(id)",
+      "options": {
+        "stdout": "[fun] : [(a) -b-> a]"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (4•)",
+      "code": "single(~id)",
+      "options": {
+        "stdout": "[fun] : [forall a,b::Row.(a) -b-> a]"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (5)",
+      "code": "~id :: ids",
+      "options": {
+        "stdout": "[fun, fun] : [forall a,b::Row.(a) -b-> a]"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (6)",
+      "code": "$(fun(x:_::(Unl,Any)) { x }) :: ids",
+      "options": {
+        "stdout": "[fun, fun] : [forall a,b::Row.(a) -b-> a]"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (7)",
+      "code": "single(inc) ++ single(id)",
+      "options": {
+        "stdout": "[fun, fun] : [(Int) -a-> Int]"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (8)",
+      "code": "tests/freezeml/c8.links",
+      "options": {
+        "filemode": "true",
+        "stdout": "fun : forall a,b::Row.(a) -b-> a"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (9)",
+      "code": "map(poly)(single(~id))",
+      "options": {
+        "stdout": "[(0, true)] : [(Int, Bool)]"
+      }
+    },
+    {
+      "name": "Functions on Polymorphic Lists (10)",
+      "code": "map(head)(single(ids))",
+      "options": {
+        "stdout": "[fun] : [forall a,b::Row.(a) -b-> a]"
+      }
+    },
+    {
+      "name": "Application functions (1)",
+      "code": "app(poly)(~id)",
+      "options": {
+        "stdout": "(0, true) : (Int, Bool)"
+      }
+    },
+    {
+      "name": "Application functions (2)",
+      "code": "revapp(~id)(poly)",
+      "options": {
+        "stdout": "(0, true) : (Int, Bool)"
+      }
+    },
+    {
+      "name": "Application functions (3)",
+      "code": "runST(~argST)",
+      "options": {
+        "stdout": "0 : Int"
+      }
+    },
+    {
+      "name": "Application functions (4)",
+      "code": "revapp(~argST)(runST)",
+      "options": {
+        "stdout": "0 : Int"
+      }
+    },
+    {
+      "name": "η-expansion (1)",
+      "code": "tests/freezeml/e1.links",
+      "options": {
+        "filemode": "true",
+        "exit": "1",
+        "stderr": "@.*Type error:.*"
+      }
+    },
+    {
+      "name": "η-expansion (2)",
+      "code": "tests/freezeml/e2.links",
+      "options": {
+        "filemode": "true",
+        "stdout": "fun : forall a::Row,b,c::Row.(Int) -a-> (b) -c-> b"
+      }
+    },
+    {
+      "name": "η-expansion (3)",
+      "code": "tests/freezeml/e3.links",
+      "options": {
+        "filemode": "true",
+        "exit": "1",
+        "stderr": "@.*Type error:.*"
+      }
+    },
+    {
+      "name": "η-expansion (4)",
+      "code": "tests/freezeml/e4.links",
+      "options": {
+        "filemode": "true",
+        "stdout": "0 : Int"
+      }
+    },
+    {
+      "name": "FreezeML programs (1)",
+      "code": "fun id(x) { x } ~id",
+      "options": {
+        "stdout": "fun : forall a::(Any,Any),b::Row.(a::Any) -b-> a::Any"
+      }
+    },
+    {
+      "name": "FreezeML programs (2)",
+      "code": "var ids = [~id]; ~ids",
+      "options": {
+        "stdout": "[fun] : [forall a,b::Row.(a) -b-> a]"
+      }
+    },
+    {
+      "name": "FreezeML programs (5)",
+      "code": "auto(~id)",
+      "options": {
+        "stdout": "fun : forall a,b::Row.(a) -b-> a"
+      }
+    },
+    {
+      "name": "FreezeML programs (6)",
+      "code": "head(ids) :: ids",
+      "options": {
+        "stdout": "[fun, fun] : [forall a,b::Row.(a) -b-> a]"
+      }
+    },
+    {
+      "name": "FreezeML programs (7)",
+      "code": "head(ids)@(3)",
+      "options": {
+        "stdout": "3 : Int"
+      }
+    },
+    {
+      "name": "FreezeML programs (8)",
+      "code": "choose (head(ids))",
+      "options": {
+        "stdout": "fun : (forall a,b::Row.(a) -b-> a) -c-> forall a,b::Row.(a) -b-> a"
+      }
+    },
+    {
+      "name": "FreezeML programs (8•)",
+      "code": "choose (head(ids)@)",
+      "options": {
+        "stdout": "fun : ((a) -b-> a) -c-> (a) -b-> a"
+      }
+    },
+    {
+      "name": "FreezeML programs (9)",
+      "code": "var f = revapp(~id); f(poly)",
+      "options": {
+        "stdout": "(0, true) : (Int, Bool)"
+      }
+    },
+    {
+      "name": "Do not generalise non-values",
+      "code": "$(id(2))",
+      "options": {
+        "exit": "1",
+        "stderr": "@.*Because of the value restriction.*"
+      }
+    },
+    {
+      "name": "Do not infer polymorphic arguments (1)",
+      "code": "fun(f) { (poly(~f), f(42) + 1) }",
+      "options": {
+        "exit": "1",
+        "stderr": "@.*Type error:.*"
+      }
+    },
+    {
+      "name": "Do not infer polymorphic arguments (2)",
+      "code": "fun(f) { (f(42) + 1, poly(~f)) }",
+      "options": {
+        "exit": "1",
+        "stderr": "@.*Type error:.*"
+      }
+    },
+    {
+      "name": "Do not infer polymorphic arguments (3)",
+      "code": "tests/freezeml/session1.links",
+      "options": {
+        "exit": "1",
+        "stderr": "@.*Type error:.*",
+        "ignore": "Failing test case, as Mono kinds get converted to Session."
+      }
+    },
+    {
+      "name": "Do not infer polymorphic arguments (4)",
+      "code": "tests/freezeml/session2.links",
+      "options": {
+        "exit": "1",
+        "stderr": "@.*Type error:.*"
+      }
+    },
+    {
+      "name": "Do not infer polymorphic values (1)",
+      "code": "fun(bot: (forall a. a)) { var f = bot(bot); (poly(~f), f(42) + 1) }",
+      "options": {
+        "exit": "1",
+        "stderr": "@.*Type error:.*"
+      }
+    },
+    {
+      "name": "Do not infer polymorphic values (2)",
+      "code": "fun(bot: (forall a. a)) { var f = bot(bot); (f(42) + 1, poly(~f)) }",
+      "options": {
+        "exit": "1",
+        "stderr": "@.*Type error:.*"
+      }
+    }
+  ]
+}

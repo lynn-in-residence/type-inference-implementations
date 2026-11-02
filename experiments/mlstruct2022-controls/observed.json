@@ -1,0 +1,43 @@
+{
+  "schema": "mlstruct2022-boolean-controls-v1",
+  "origin": "Lynn finite illustration; not double-checked",
+  "source": "MLstruct2022 author v6.2 §§1,2.3.2,3.2.1",
+  "noTermInference": true,
+  "noFullSubtypingModel": true,
+  "noAuthorExecution": true,
+  "atoms": 3,
+  "valuations": 512,
+  "identityAssertions": 1024,
+  "diagnosticAssertions": 6,
+  "totalAssertions": 1030,
+  "identities": [
+    "A <= B | X iff A & ~B <= X",
+    "X & B <= A iff X <= A | ~B"
+  ],
+  "checks": [
+    {
+      "name": "wrong input union admits Some Bool",
+      "value": true
+    },
+    {
+      "name": "wrong branch sends Bool to Int function",
+      "value": true
+    },
+    {
+      "name": "negated Some tag removes wrong default input",
+      "value": false
+    },
+    {
+      "name": "set reading of record correlation has two cases",
+      "value": 2
+    },
+    {
+      "name": "fieldwise set reading has four cases",
+      "value": 4
+    },
+    {
+      "name": "mixed fields appear only in widened reading",
+      "value": true
+    }
+  ]
+}

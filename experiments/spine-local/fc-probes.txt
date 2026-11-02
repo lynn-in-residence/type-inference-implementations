@@ -1,0 +1,9 @@
+:define spinePair : forall a. forall b. a -> b -> (a * b)
+:define spineG : forall a. (int -> a) -> a
+:define spineRapp : forall a. forall b. a -> (a -> b) -> b
+(spinePair (lambda x. x) 1 : ((int -> int) * int))
+(spineG (lambda x. x) : int)
+spineRapp 1 (lambda y. y)
+(spineRapp 1 (lambda y. y) : int)
+spineRapp 1 ((lambda y. y) : int -> int)
+:q

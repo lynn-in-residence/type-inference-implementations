@@ -1,0 +1,15 @@
+[Ty-App] ⊢ ■ ⇒ twice 1 λx. x ⇒ int
+  [Ty-App] ⊢ [λx. x] ↝ ■ ⇒ twice 1 ⇒ (int -> int) -> int
+    [Ty-Sub] ⊢ [1] ↝ [λx. x] ↝ ■ ⇒ twice ⇒ int -> (int -> int) -> int
+      [Ty-Var] ⊢ ■ ⇒ twice ⇒ forall a. a -> (a -> a) -> a
+      [S-Forall-L] ; ∅ ⊢ forall a. a -> (a -> a) -> a <: [1] ↝ [λx. x] ↝ ■ ⊣ ∅ ⇝ int -> (int -> int) -> int
+        [S-Term-Open] ; ∅, a^ ⊢ a -> (a -> a) -> a <: [1] ↝ [λx. x] ↝ ■ ⊣ ∅, a=int ⇝ int -> (int -> int) -> int
+          [Ty-Int] ⊢ ■ ⇒ 1 ⇒ int
+          [S-MVar-R] ; ∅, a^ ⊢ int ≤- a ⊣ ∅, a=int
+          [S-Term-Closed] ; ∅, a=int ⊢ (a -> a) -> a <: [λx. x] ↝ ■ ⊣ ∅, a=int ⇝ (int -> int) -> int
+            [Ty-Abs1] ⊢ int -> int ⇒ λx. x ⇒ int -> int
+              [Ty-Sub] ⊢ int ⇒ x ⇒ int
+                [Ty-Var] ⊢ ■ ⇒ x ⇒ int
+                [S-Type] ; ∅ ⊢ int <: int ⊣ ∅ ⇝ int
+                  [S-Int] ; ∅ ⊢ int ≤+ int ⊣ ∅
+            [S-Empty] ; ∅, a=int ⊢ a <: ■ ⊣ ∅, a=int ⇝ int

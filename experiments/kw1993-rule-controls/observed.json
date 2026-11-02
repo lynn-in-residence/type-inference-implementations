@@ -1,0 +1,38 @@
+{
+  "source": "KW report 93-017, cover 1 December 1993",
+  "origin": "Lynn reconstruction",
+  "scope": "bounded native VAR/ABS/INST-minus/GEN derivation and grammar checks only",
+  "review": "not independently double-checked",
+  "nodesChecked": 8,
+  "namingConventionsCheckedPerAssertion": true,
+  "controls": [
+    {
+      "id": "root-gen",
+      "term": "lambda x. x",
+      "type": "(forall a. (a -> a))",
+      "derivationValid": true,
+      "applicationSubterms": 0,
+      "companionArguments": 0,
+      "finding": "Literal Lemma4.7 omits the root exception retained by Lemma4.6."
+    },
+    {
+      "id": "two-polymorphic-parameters",
+      "term": "lambda x. lambda y. x",
+      "type": "(forall a. ((forall u. u) -> ((forall v. v) -> a)))",
+      "derivationValid": true,
+      "assertionRank": 2,
+      "contextSchemeRankAtMost": 1,
+      "figure3AbsBodyInS0": false,
+      "finding": "Theorem4.9 exact-type equivalence conflicts with Figure3 literal ABS body gate; not a typability rejection of this term."
+    },
+    {
+      "id": "rank-two-context-is-not-a-rank-two-assertion",
+      "contextType": "((forall b. (b -> b)) -> (forall c. (c -> c)))",
+      "contextTypeRank": 2,
+      "assertionAdmissible": false
+    }
+  ],
+  "wholeInferencer": false,
+  "authorRuntime": false,
+  "mainTheoremRechecked": false
+}

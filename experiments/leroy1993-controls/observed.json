@@ -1,0 +1,309 @@
+{
+  "scope": "eight bounded native evaluations; three supplied ground certificates; not inference, author runtime or a full theorem repair",
+  "observations": [
+    {
+      "id": "shared-let-val-reference",
+      "term": {
+        "tag": "app",
+        "fn": {
+          "tag": "lambda",
+          "x": "r",
+          "body": {
+            "tag": "app",
+            "fn": {
+              "tag": "lambda",
+              "x": "ignored",
+              "body": {
+                "tag": "unop",
+                "op": "deref",
+                "arg": {
+                  "tag": "var",
+                  "x": "r"
+                }
+              }
+            },
+            "arg": {
+              "tag": "binop",
+              "op": "assign",
+              "left": {
+                "tag": "var",
+                "x": "r"
+              },
+              "right": {
+                "tag": "int",
+                "n": 2
+              }
+            }
+          }
+        },
+        "arg": {
+          "tag": "unop",
+          "op": "ref",
+          "arg": {
+            "tag": "int",
+            "n": 1
+          }
+        }
+      },
+      "observed": {
+        "answer": 2,
+        "allocations": 1
+      }
+    },
+    {
+      "id": "fresh-let-name-reference",
+      "term": {
+        "tag": "let-name",
+        "x": "r",
+        "value": {
+          "tag": "unop",
+          "op": "ref",
+          "arg": {
+            "tag": "int",
+            "n": 1
+          }
+        },
+        "body": {
+          "tag": "app",
+          "fn": {
+            "tag": "lambda",
+            "x": "ignored",
+            "body": {
+              "tag": "unop",
+              "op": "deref",
+              "arg": {
+                "tag": "var",
+                "x": "r"
+              }
+            }
+          },
+          "arg": {
+            "tag": "binop",
+            "op": "assign",
+            "left": {
+              "tag": "var",
+              "x": "r"
+            },
+            "right": {
+              "tag": "int",
+              "n": 2
+            }
+          }
+        }
+      },
+      "observed": {
+        "answer": 1,
+        "allocations": 2
+      }
+    },
+    {
+      "id": "unused-let-name-allocation",
+      "term": {
+        "tag": "let-name",
+        "x": "unused",
+        "value": {
+          "tag": "unop",
+          "op": "ref",
+          "arg": {
+            "tag": "int",
+            "n": 1
+          }
+        },
+        "body": {
+          "tag": "int",
+          "n": 5
+        }
+      },
+      "observed": {
+        "answer": 5,
+        "allocations": 0
+      }
+    },
+    {
+      "id": "unused-let-val-allocation",
+      "term": {
+        "tag": "app",
+        "fn": {
+          "tag": "lambda",
+          "x": "unused",
+          "body": {
+            "tag": "int",
+            "n": 5
+          }
+        },
+        "arg": {
+          "tag": "unop",
+          "op": "ref",
+          "arg": {
+            "tag": "int",
+            "n": 1
+          }
+        }
+      },
+      "observed": {
+        "answer": 5,
+        "allocations": 1
+      }
+    },
+    {
+      "id": "polymorphic-reference-specializations",
+      "term": {
+        "tag": "let-name",
+        "x": "r",
+        "value": {
+          "tag": "unop",
+          "op": "ref",
+          "arg": {
+            "tag": "lambda",
+            "x": "x",
+            "body": {
+              "tag": "var",
+              "x": "x"
+            }
+          }
+        },
+        "body": {
+          "tag": "app",
+          "fn": {
+            "tag": "lambda",
+            "x": "ignored",
+            "body": {
+              "tag": "app",
+              "fn": {
+                "tag": "app",
+                "fn": {
+                  "tag": "unop",
+                  "op": "deref",
+                  "arg": {
+                    "tag": "var",
+                    "x": "r"
+                  }
+                },
+                "arg": {
+                  "tag": "lambda",
+                  "x": "x",
+                  "body": {
+                    "tag": "var",
+                    "x": "x"
+                  }
+                }
+              },
+              "arg": {
+                "tag": "int",
+                "n": 5
+              }
+            }
+          },
+          "arg": {
+            "tag": "binop",
+            "op": "assign",
+            "left": {
+              "tag": "var",
+              "x": "r"
+            },
+            "right": {
+              "tag": "lambda",
+              "x": "x",
+              "body": {
+                "tag": "int",
+                "n": 1
+              }
+            }
+          }
+        }
+      },
+      "observed": {
+        "answer": 5,
+        "allocations": 2
+      }
+    },
+    {
+      "id": "printed-throw-value-first",
+      "term": {
+        "tag": "unop",
+        "op": "callcc",
+        "arg": {
+          "tag": "lambda",
+          "x": "k",
+          "body": {
+            "tag": "binop",
+            "op": "throw",
+            "left": {
+              "tag": "int",
+              "n": 1
+            },
+            "right": {
+              "tag": "var",
+              "x": "k"
+            }
+          }
+        }
+      },
+      "observed": {
+        "answer": "wrong",
+        "allocations": 0
+      },
+      "suppliedGroundCertificates": {
+        "type": "int",
+        "printedFigure4": true,
+        "swappedPremises": false
+      }
+    },
+    {
+      "id": "intended-throw-continuation-first",
+      "term": {
+        "tag": "unop",
+        "op": "callcc",
+        "arg": {
+          "tag": "lambda",
+          "x": "k",
+          "body": {
+            "tag": "binop",
+            "op": "throw",
+            "left": {
+              "tag": "var",
+              "x": "k"
+            },
+            "right": {
+              "tag": "int",
+              "n": 1
+            }
+          }
+        }
+      },
+      "observed": {
+        "answer": 1,
+        "allocations": 0
+      },
+      "suppliedGroundCertificates": {
+        "type": "int",
+        "printedFigure4": false,
+        "swappedPremises": true
+      }
+    },
+    {
+      "id": "callcc-without-throw",
+      "term": {
+        "tag": "unop",
+        "op": "callcc",
+        "arg": {
+          "tag": "lambda",
+          "x": "k",
+          "body": {
+            "tag": "int",
+            "n": 1
+          }
+        }
+      },
+      "observed": {
+        "answer": 1,
+        "allocations": 0
+      },
+      "suppliedGroundCertificates": {
+        "type": "int",
+        "printedFigure4": true,
+        "swappedPremises": true
+      }
+    }
+  ]
+}

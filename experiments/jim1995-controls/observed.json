@@ -1,0 +1,31 @@
+{
+  "boundary": "15 bounded supplied-certificate controls; no PP/MGS search, parser, author runtime or theorem recheck",
+  "positive": [
+    "variable_function",
+    "variable_argument",
+    "open_self_application",
+    "self_abstraction",
+    "quantified_self_abstraction",
+    "identity",
+    "supplied_self_instance",
+    "identity_meets_two_requirements",
+    "closed_application",
+    "vacuous_recursive_definition"
+  ],
+  "negative": [
+    "one_identity_instance_for_both_requirements",
+    "monomorphic_environment_cannot_project_argument",
+    "quantified_assumption_outside_T1",
+    "quantified_arrow_domain_outside_T2",
+    "generalization_captures_environment"
+  ],
+  "source": "Jim August1995 TM-532 §§2–3, Examples2/7 and rec-vac",
+  "nativeResults": {
+    "openBody": "x:a∧(a→b) ⊢ x x:b",
+    "self": "⊢ λx.x x:∀a,b.(a∧(a→b))→b",
+    "application": "⊢ (λx.x x)(λy.y):∀s.s→s",
+    "vacuous": "⊢ μw.λx.x x:∀a,b.(a∧(a→b))→b"
+  },
+  "inferenceExecuted": false,
+  "proofSearch": false
+}

@@ -1,0 +1,70 @@
+identity-application
+  term: id 1
+  paper: int
+  pinned prototype: int
+
+known-before-lambda
+  term: twice 1 (lambda x. x)
+  paper: int
+  pinned prototype: int
+
+lambda-before-known
+  term: flipped (lambda x. x) 1
+  paper: reject
+  pinned prototype: reject
+
+annotated-first-lambda
+  term: flipped ((lambda x. x) : int -> int) 1
+  paper: int
+  pinned prototype: int
+
+unapplied-poly-argument
+  term: mono id
+  paper: reject
+  pinned prototype: reject
+
+eta-repair
+  term: mono (lambda x. id x)
+  paper: int
+  pinned prototype: int
+
+explicit-instantiation-repair
+  term: mono (id @ int)
+  paper: int
+  pinned prototype: int
+
+curried-complete-call
+  term: const true 1
+  paper: bool
+  pinned prototype: bool
+
+curried-unresolved-result
+  term: const true
+  paper: reject
+  pinned prototype: reject
+
+impredicative-list
+  term: single id
+  paper: [forall a. a -> a]
+  pinned prototype: [forall a. a -> a]
+
+retain-poly-argument
+  term: choose id
+  paper: (forall a. a -> a) -> (forall a. a -> a)
+  pinned prototype: (forall a. a -> a) -> (forall a. a -> a)
+
+poly-result-applied
+  term: id id 1
+  paper: int
+  pinned prototype: int
+
+bare-lambda
+  term: lambda x. x
+  paper: reject
+  pinned prototype: reject
+
+unused-quantifier
+  term: phantom 1
+  paper: int
+  pinned prototype: reject
+  discrepancy: Figure 8 AS-forall-L allows an unused quantifier to remain unsolved and be discarded; the prototype pattern requires ESvar (a solved entry).

@@ -1,0 +1,103 @@
+{
+  "authorRevision": "fdec44b80cfa5bdc010da9cc012e75a96d0dd19f",
+  "scope": "7 inference successes, 1 type-error control, 4 author subsumption queries, 1 parser control; no evaluation",
+  "observations": [
+    {
+      "id": "self",
+      "source": "fun x -> x x",
+      "signature": "(((a -> b) & a) -> b)",
+      "exit": 0,
+      "stdout": "val res : (((a -> b) & a) -> b)\n",
+      "stderr": ""
+    },
+    {
+      "id": "self-bool",
+      "source": "(fun x -> x x) (fun z -> true)",
+      "signature": "bool",
+      "exit": 0,
+      "stdout": "val res : bool\n",
+      "stderr": ""
+    },
+    {
+      "id": "lambda-mixed",
+      "source": "fun f -> {a = f 1; b = f true}",
+      "signature": "((bool | int -> a) -> {a : a, b : a})",
+      "exit": 0,
+      "stdout": "val res : ((bool | int -> a) -> {a : a, b : a})\n",
+      "stderr": ""
+    },
+    {
+      "id": "captured-alias",
+      "source": "fun x -> let a = x in {i = a 1; b = a true}",
+      "signature": "((bool | int -> a) -> {i : a, b : a})",
+      "exit": 0,
+      "stdout": "val res : ((bool | int -> a) -> {i : a, b : a})\n",
+      "stderr": ""
+    },
+    {
+      "id": "twice",
+      "source": "fun f -> fun x -> f (f x)",
+      "signature": "((a -> (b & a)) -> (a -> b))",
+      "exit": 0,
+      "stdout": "val res : ((a -> (b & a)) -> (a -> b))\n",
+      "stderr": ""
+    },
+    {
+      "id": "twice-bool",
+      "source": "let twice = fun f -> fun x -> f (f x) in twice (fun z -> true)",
+      "signature": "(Top -> bool)",
+      "exit": 0,
+      "stdout": "val res : (Top -> bool)\n",
+      "stderr": ""
+    },
+    {
+      "id": "twice-bool-int",
+      "source": "let twice = fun f -> fun x -> f (f x) in twice (fun z -> true) 42",
+      "signature": "bool",
+      "exit": 0,
+      "stdout": "val res : bool\n",
+      "stderr": ""
+    }
+  ],
+  "negative": {
+    "source": "let res = (fun x -> x + 1) true",
+    "exit": 0,
+    "stdout": "val res : <type error>\n",
+    "stderr": ""
+  },
+  "subsumption": [
+    {
+      "query": "(((a | b) -> b) -> a -> b) <: ((a -> (b & a)) -> a -> b)",
+      "answer": "Y",
+      "exit": 0,
+      "stdout": "[Y] ((a -> (b & a)) -> (a -> b)) <: ((a -> (b & a)) -> (a -> b))\n",
+      "stderr": ""
+    },
+    {
+      "query": "((a -> (b & a)) -> a -> b) <: (((a | b) -> b) -> a -> b)",
+      "answer": "Y",
+      "exit": 0,
+      "stdout": "[Y] ((a -> (b & a)) -> (a -> b)) <: ((a -> (b & a)) -> (a -> b))\n",
+      "stderr": ""
+    },
+    {
+      "query": "int <: bool",
+      "answer": "N",
+      "exit": 0,
+      "stdout": "[N] int <: bool\n",
+      "stderr": ""
+    },
+    {
+      "query": "bool <: int",
+      "answer": "N",
+      "exit": 0,
+      "stdout": "[N] bool <: int\n",
+      "stderr": ""
+    }
+  ],
+  "parserControl": {
+    "exit": 2,
+    "stdout": "",
+    "stderr": "Fatal error: exception Parser.Make(L).MenhirBasics.Error\n"
+  }
+}

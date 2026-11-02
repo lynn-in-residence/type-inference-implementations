@@ -1,0 +1,73 @@
+{
+  "schema": "freezeml-2022-isolated-interface-check-v1",
+  "scope": "one Figure10 variable clause, reflection clause, and S-Eq context interface; not term inference or a complete solver",
+  "checks": [
+    "initial existential state satisfies the three inspected invariants",
+    "literal returned context removes a",
+    "literal substitution still has a in its domain",
+    "literal substitution solves a to Int",
+    "S-Eq keeps the existential frame, so context/stack domains differ",
+    "literal substitution is not typed from returned context to itself",
+    "literal substitution is nevertheless idempotent",
+    "2020 smaller-codomain unifier interface permits this result",
+    "candidate retains solved a after checking the type",
+    "candidate restores these local state invariants",
+    "occurs-check scope assertion fails with retainSolved=false",
+    "occurs-check scope assertion fails with retainSolved=true",
+    "first clause a=a preserves the context",
+    "monomorphic solve demotes b but still loses a"
+  ],
+  "observations": {
+    "before": {
+      "stackDomainMatches": true,
+      "substitutionDomainAndRangeMatch": true,
+      "idempotent": true
+    },
+    "literalResult": {
+      "context": {},
+      "substitution": {
+        "a": {
+          "tag": "data",
+          "name": "Int",
+          "arguments": []
+        }
+      }
+    },
+    "afterLiteralSEq": {
+      "stackDomainMatches": false,
+      "substitutionDomainAndRangeMatch": false,
+      "idempotent": true
+    },
+    "oldUnifierInterfaceAccepts": true,
+    "candidateResult": {
+      "context": {
+        "a": "poly"
+      },
+      "substitution": {
+        "a": {
+          "tag": "data",
+          "name": "Int",
+          "arguments": []
+        }
+      }
+    },
+    "candidateRestoresOnlyInspectedLocalInvariants": true,
+    "occursCheckPresent": true,
+    "monomorphicVariableResult": {
+      "context": {
+        "b": "mono"
+      },
+      "substitution": {
+        "a": {
+          "tag": "var",
+          "name": "b"
+        },
+        "b": {
+          "tag": "var",
+          "name": "b"
+        }
+      }
+    }
+  },
+  "limits": "No forall unification, let partitioning, general soundness/completeness/termination proof, author code execution, or implementation-review upgrade."
+}

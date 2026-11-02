@@ -1,0 +1,230 @@
+{
+  "schema": "atlas-term-cases-v2",
+  "language": "atlas-term-language-v2",
+  "cases": [
+    {
+      "id": "let-id-return",
+      "context": [],
+      "term": {
+        "tag": "let",
+        "name": "id",
+        "value": {
+          "tag": "lambda",
+          "param": "x",
+          "body": {
+            "tag": "var",
+            "name": "x"
+          }
+        },
+        "body": {
+          "tag": "var",
+          "name": "id"
+        }
+      },
+      "purpose": "Isolate the missing let form; no base literals or pairs."
+    },
+    {
+      "id": "nested-let-id",
+      "context": [],
+      "term": {
+        "tag": "lambda",
+        "param": "y",
+        "body": {
+          "tag": "let",
+          "name": "id",
+          "value": {
+            "tag": "lambda",
+            "param": "x",
+            "body": {
+              "tag": "var",
+              "name": "x"
+            }
+          },
+          "body": {
+            "tag": "var",
+            "name": "id"
+          }
+        }
+      },
+      "purpose": "The missing form remains visible inside a lambda."
+    },
+    {
+      "id": "lambda-self-application",
+      "context": [],
+      "term": {
+        "tag": "lambda",
+        "param": "x",
+        "body": {
+          "tag": "app",
+          "fn": {
+            "tag": "var",
+            "name": "x"
+          },
+          "arg": {
+            "tag": "var",
+            "name": "x"
+          }
+        }
+      },
+      "purpose": "Syntax-eligible is not a type acceptance; no inference is run by the scope gate."
+    },
+    {
+      "id": "let-id-two-parameter-uses",
+      "context": [],
+      "term": {
+        "tag": "let",
+        "name": "id",
+        "value": {
+          "tag": "lambda",
+          "param": "x",
+          "body": {
+            "tag": "var",
+            "name": "x"
+          }
+        },
+        "body": {
+          "tag": "app",
+          "fn": {
+            "tag": "lambda",
+            "param": "f",
+            "body": {
+              "tag": "pair",
+              "left": {
+                "tag": "app",
+                "fn": {
+                  "tag": "var",
+                  "name": "f"
+                },
+                "arg": {
+                  "tag": "int",
+                  "value": "123"
+                }
+              },
+              "right": {
+                "tag": "app",
+                "fn": {
+                  "tag": "var",
+                  "name": "f"
+                },
+                "arg": {
+                  "tag": "bool",
+                  "value": true
+                }
+              }
+            }
+          },
+          "arg": {
+            "tag": "var",
+            "name": "id"
+          }
+        }
+      },
+      "purpose": "The first archived four-system comparison, normalized into the fixed AST. No new verdict here."
+    },
+    {
+      "id": "context-single-id",
+      "term": {
+        "tag": "app",
+        "fn": {
+          "tag": "var",
+          "name": "single"
+        },
+        "arg": {
+          "tag": "var",
+          "name": "id"
+        }
+      },
+      "context": [
+        {
+          "name": "single",
+          "type": {
+            "tag": "forall",
+            "vars": [
+              "a"
+            ],
+            "body": {
+              "tag": "arrow",
+              "domain": {
+                "tag": "tvar",
+                "name": "a"
+              },
+              "codomain": {
+                "tag": "con",
+                "name": "List",
+                "args": [
+                  {
+                    "tag": "tvar",
+                    "name": "a"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "id",
+          "type": {
+            "tag": "forall",
+            "vars": [
+              "a"
+            ],
+            "body": {
+              "tag": "arrow",
+              "domain": {
+                "tag": "tvar",
+                "name": "a"
+              },
+              "codomain": {
+                "tag": "tvar",
+                "name": "a"
+              }
+            }
+          }
+        }
+      ],
+      "purpose": "Prenex schemes and a free constant are in scope for HM."
+    },
+    {
+      "id": "context-rank2-poly",
+      "term": {
+        "tag": "var",
+        "name": "poly"
+      },
+      "context": [
+        {
+          "name": "poly",
+          "type": {
+            "tag": "arrow",
+            "domain": {
+              "tag": "forall",
+              "vars": [
+                "a"
+              ],
+              "body": {
+                "tag": "arrow",
+                "domain": {
+                  "tag": "tvar",
+                  "name": "a"
+                },
+                "codomain": {
+                  "tag": "tvar",
+                  "name": "a"
+                }
+              }
+            },
+            "codomain": {
+              "tag": "product",
+              "left": {
+                "tag": "Int"
+              },
+              "right": {
+                "tag": "Bool"
+              }
+            }
+          }
+        }
+      ],
+      "purpose": "HM context type is out of language, independently of the supported variable term."
+    }
+  ]
+}

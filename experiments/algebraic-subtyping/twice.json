@@ -1,0 +1,26 @@
+{
+  "id": "twice",
+  "origin": "TypingTests/basic; both papers' twice example",
+  "source": "fun f -> fun x -> f (f x)",
+  "simple": {
+    "accepted": true,
+    "raw": "(α0 -> (α1 -> α3))",
+    "bounds": "α0 <: (α2 -> α3) & (α1 -> α2)",
+    "coalesced": "'a ∧ ('b -> 'c) ∧ ('d -> 'b) -> 'd -> 'c",
+    "compact": "CompactTypeScheme(‹‹α0, ‹α2, α1› -> ‹α3, α2›› -> ‹‹α1› -> ‹α3›››,TreeMap())",
+    "simplifiedCompact": "CompactTypeScheme(‹‹‹α3, α1› -> ‹α3›› -> ‹‹α1› -> ‹α3›››,Map())",
+    "final": "('a ∨ 'b -> 'a) -> 'b -> 'a",
+    "mlsubSyntax": "(a | b -> a) -> b -> a"
+  },
+  "mlsub": {
+    "signature": "((a -> (b & a)) -> (a -> b))",
+    "stdout": "val succ : (int -> int)\nval add : (int -> (int -> int))\nval res : ((a -> (b & a)) -> (a -> b))\n"
+  },
+  "mutualSubsumption": {
+    "verdicts": [
+      "Y",
+      "Y"
+    ],
+    "stdout": "[Y] ((a -> (b & a)) -> (a -> b)) <: ((a -> (b & a)) -> (a -> b))\n[Y] ((a -> (b & a)) -> (a -> b)) <: ((a -> (b & a)) -> (a -> b))\n"
+  }
+}

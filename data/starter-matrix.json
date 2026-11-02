@@ -1,0 +1,465 @@
+{
+  "version": 2,
+  "cases": [
+    {
+      "id": "identity",
+      "display": "λx.x",
+      "context": [],
+      "term": {
+        "tag": "lambda",
+        "param": "x",
+        "body": {
+          "tag": "var",
+          "name": "x"
+        }
+      },
+      "expected": {
+        "type": "a -> a"
+      }
+    },
+    {
+      "id": "application",
+      "display": "λf.λx.f x",
+      "context": [],
+      "term": {
+        "tag": "lambda",
+        "param": "f",
+        "body": {
+          "tag": "lambda",
+          "param": "x",
+          "body": {
+            "tag": "app",
+            "fn": {
+              "tag": "var",
+              "name": "f"
+            },
+            "arg": {
+              "tag": "var",
+              "name": "x"
+            }
+          }
+        }
+      },
+      "expected": {
+        "type": "(a -> b) -> a -> b"
+      }
+    },
+    {
+      "id": "self-application",
+      "display": "λx.x x",
+      "context": [],
+      "term": {
+        "tag": "lambda",
+        "param": "x",
+        "body": {
+          "tag": "app",
+          "fn": {
+            "tag": "var",
+            "name": "x"
+          },
+          "arg": {
+            "tag": "var",
+            "name": "x"
+          }
+        }
+      },
+      "expected": {
+        "rejected": "occurs-check"
+      }
+    },
+    {
+      "id": "let-polymorphism",
+      "display": "let id=λx.x in (id 1,id true)",
+      "context": [],
+      "term": {
+        "tag": "let",
+        "name": "id",
+        "value": {
+          "tag": "lambda",
+          "param": "x",
+          "body": {
+            "tag": "var",
+            "name": "x"
+          }
+        },
+        "body": {
+          "tag": "pair",
+          "left": {
+            "tag": "app",
+            "fn": {
+              "tag": "var",
+              "name": "id"
+            },
+            "arg": {
+              "tag": "int",
+              "value": "1"
+            }
+          },
+          "right": {
+            "tag": "app",
+            "fn": {
+              "tag": "var",
+              "name": "id"
+            },
+            "arg": {
+              "tag": "bool",
+              "value": true
+            }
+          }
+        }
+      },
+      "expected": {
+        "type": "(Int * Bool)"
+      }
+    },
+    {
+      "id": "lambda-two-types",
+      "display": "λf.(f 1,f true)",
+      "context": [],
+      "term": {
+        "tag": "lambda",
+        "param": "f",
+        "body": {
+          "tag": "pair",
+          "left": {
+            "tag": "app",
+            "fn": {
+              "tag": "var",
+              "name": "f"
+            },
+            "arg": {
+              "tag": "int",
+              "value": "1"
+            }
+          },
+          "right": {
+            "tag": "app",
+            "fn": {
+              "tag": "var",
+              "name": "f"
+            },
+            "arg": {
+              "tag": "bool",
+              "value": true
+            }
+          }
+        }
+      },
+      "expected": {
+        "rejected": "constructor-clash"
+      }
+    },
+    {
+      "id": "captured-alias",
+      "display": "λx.let a=x in (a 1,a true)",
+      "context": [],
+      "term": {
+        "tag": "lambda",
+        "param": "x",
+        "body": {
+          "tag": "let",
+          "name": "a",
+          "value": {
+            "tag": "var",
+            "name": "x"
+          },
+          "body": {
+            "tag": "pair",
+            "left": {
+              "tag": "app",
+              "fn": {
+                "tag": "var",
+                "name": "a"
+              },
+              "arg": {
+                "tag": "int",
+                "value": "1"
+              }
+            },
+            "right": {
+              "tag": "app",
+              "fn": {
+                "tag": "var",
+                "name": "a"
+              },
+              "arg": {
+                "tag": "bool",
+                "value": true
+              }
+            }
+          }
+        }
+      },
+      "expected": {
+        "rejected": "constructor-clash"
+      }
+    },
+    {
+      "id": "lambda-pure-two-types",
+      "display": "λf.λk.k (f (λx.x)) (f (λx.λy.x))",
+      "context": [],
+      "term": {
+        "tag": "lambda",
+        "param": "f",
+        "body": {
+          "tag": "lambda",
+          "param": "k",
+          "body": {
+            "tag": "app",
+            "fn": {
+              "tag": "app",
+              "fn": {
+                "tag": "var",
+                "name": "k"
+              },
+              "arg": {
+                "tag": "app",
+                "fn": {
+                  "tag": "var",
+                  "name": "f"
+                },
+                "arg": {
+                  "tag": "lambda",
+                  "param": "x",
+                  "body": {
+                    "tag": "var",
+                    "name": "x"
+                  }
+                }
+              }
+            },
+            "arg": {
+              "tag": "app",
+              "fn": {
+                "tag": "var",
+                "name": "f"
+              },
+              "arg": {
+                "tag": "lambda",
+                "param": "x",
+                "body": {
+                  "tag": "lambda",
+                  "param": "y",
+                  "body": {
+                    "tag": "var",
+                    "name": "x"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "expected": {
+        "rejected": "occurs-check"
+      }
+    },
+    {
+      "id": "let-pure-two-types",
+      "display": "let id=λx.x in λk.k (id (λx.x)) (id (λx.λy.x))",
+      "context": [],
+      "term": {
+        "tag": "let",
+        "name": "id",
+        "value": {
+          "tag": "lambda",
+          "param": "x",
+          "body": {
+            "tag": "var",
+            "name": "x"
+          }
+        },
+        "body": {
+          "tag": "lambda",
+          "param": "k",
+          "body": {
+            "tag": "app",
+            "fn": {
+              "tag": "app",
+              "fn": {
+                "tag": "var",
+                "name": "k"
+              },
+              "arg": {
+                "tag": "app",
+                "fn": {
+                  "tag": "var",
+                  "name": "id"
+                },
+                "arg": {
+                  "tag": "lambda",
+                  "param": "x",
+                  "body": {
+                    "tag": "var",
+                    "name": "x"
+                  }
+                }
+              }
+            },
+            "arg": {
+              "tag": "app",
+              "fn": {
+                "tag": "var",
+                "name": "id"
+              },
+              "arg": {
+                "tag": "lambda",
+                "param": "x",
+                "body": {
+                  "tag": "lambda",
+                  "param": "y",
+                  "body": {
+                    "tag": "var",
+                    "name": "x"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "expected": {
+        "type": "((a -> a) -> (b -> c -> b) -> d) -> d"
+      }
+    },
+    {
+      "id": "lambda-let-replacement",
+      "display": "(λid.λk.k (id (λx.x)) (id (λx.λy.x))) (λx.x)",
+      "context": [],
+      "term": {
+        "tag": "app",
+        "fn": {
+          "tag": "lambda",
+          "param": "id",
+          "body": {
+            "tag": "lambda",
+            "param": "k",
+            "body": {
+              "tag": "app",
+              "fn": {
+                "tag": "app",
+                "fn": {
+                  "tag": "var",
+                  "name": "k"
+                },
+                "arg": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "var",
+                    "name": "id"
+                  },
+                  "arg": {
+                    "tag": "lambda",
+                    "param": "x",
+                    "body": {
+                      "tag": "var",
+                      "name": "x"
+                    }
+                  }
+                }
+              },
+              "arg": {
+                "tag": "app",
+                "fn": {
+                  "tag": "var",
+                  "name": "id"
+                },
+                "arg": {
+                  "tag": "lambda",
+                  "param": "x",
+                  "body": {
+                    "tag": "lambda",
+                    "param": "y",
+                    "body": {
+                      "tag": "var",
+                      "name": "x"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "arg": {
+          "tag": "lambda",
+          "param": "x",
+          "body": {
+            "tag": "var",
+            "name": "x"
+          }
+        }
+      },
+      "expected": {
+        "rejected": "occurs-check"
+      }
+    },
+    {
+      "id": "pure-captured-alias",
+      "display": "λx.let a=x in λk.k (a (λx.x)) (a (λx.λy.x))",
+      "context": [],
+      "term": {
+        "tag": "lambda",
+        "param": "x",
+        "body": {
+          "tag": "let",
+          "name": "a",
+          "value": {
+            "tag": "var",
+            "name": "x"
+          },
+          "body": {
+            "tag": "lambda",
+            "param": "k",
+            "body": {
+              "tag": "app",
+              "fn": {
+                "tag": "app",
+                "fn": {
+                  "tag": "var",
+                  "name": "k"
+                },
+                "arg": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "var",
+                    "name": "a"
+                  },
+                  "arg": {
+                    "tag": "lambda",
+                    "param": "x",
+                    "body": {
+                      "tag": "var",
+                      "name": "x"
+                    }
+                  }
+                }
+              },
+              "arg": {
+                "tag": "app",
+                "fn": {
+                  "tag": "var",
+                  "name": "a"
+                },
+                "arg": {
+                  "tag": "lambda",
+                  "param": "x",
+                  "body": {
+                    "tag": "lambda",
+                    "param": "y",
+                    "body": {
+                      "tag": "var",
+                      "name": "x"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "expected": {
+        "rejected": "occurs-check"
+      }
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "schema": "freezeml-author-source-pin-v1",
+  "repository": "https://github.com/links-lang/links",
+  "revision": "5ed2fa544249624b31348a14ad8391af0cf8fdfe",
+  "release": "0.9",
+  "commit_date": "2019-08-08",
+  "status": "source-only; compiler and test suite not executed",
+  "files": [
+    {
+      "path": "CHANGES.md",
+      "sha256": "72409ced4969b2817bc88ca19d64dd690fc7902abf62d7054f682c03b65a200f"
+    },
+    {
+      "path": "links.opam",
+      "sha256": "f536a62388ecf4fab3f7113ca62aac0821497ce01ab2da6d9b0c8306bf70abc0"
+    },
+    {
+      "path": "core/typeSugar.ml",
+      "sha256": "7ba872a8fd630d07e8f8811b17897b320e70939e7b93f1690f7c2274e49c8f5f"
+    },
+    {
+      "path": "core/types.ml",
+      "sha256": "51d7833df0b1634d64ff326d0f9ee19c465dea160f269ba7382bcd033e086d5c"
+    },
+    {
+      "path": "core/instantiate.ml",
+      "sha256": "38c4fd693ef6f238354161e0d48e4762e5c0cd0e9f06d43fb2180d080b5e0e14"
+    },
+    {
+      "path": "core/generalise.ml",
+      "sha256": "85c255d6d02cfca5785ec4d11204da013a0fee156d3689ec768d427070309485"
+    },
+    {
+      "path": "core/unify.ml",
+      "sha256": "336f1056ba8ce3412066a076bc7d582e46f8ee80be3701bb3b414934b07e4220"
+    },
+    {
+      "path": "core/parser.mly",
+      "sha256": "85b3ffebc66b8f53a9ba8628123ee5534a82f24a788d345e8eabdda93e2fdb8f"
+    },
+    {
+      "path": "tests/freezeml.tests",
+      "sha256": "a6f825e616cb2586eb5e56fa6fd5a8842a8b4ca66cbbd5cb8b490a9b1d8cf3bb"
+    },
+    {
+      "path": "tests/freezeml.tests.config",
+      "sha256": "53c4105d9438761882881dc15b063ad054bec3ab9c3373a744310cd7b355da40"
+    },
+    {
+      "path": "tests/freezeml_prelude.links",
+      "sha256": "74e2e0452662b6c972f1a14a9c13ccd0f8d638ce45c6650c349dbf78b1964e4e"
+    },
+    {
+      "path": "test-harness",
+      "sha256": "f38ad045a2799ad02fc435900dd369b691b8d008b6c2c4a9eb69dea78d51bedb"
+    },
+    {
+      "path": "tests/freezeml/a9.links",
+      "sha256": "93340d5e28719d826f5dabe6cf7320ac74a733b1e76a737f05775322b232248a"
+    },
+    {
+      "path": "tests/freezeml/c8.links",
+      "sha256": "1ba8f79a21b17e98dca6a5348592ad87d7d7d319f418dcc441621d94f5ce0c07"
+    },
+    {
+      "path": "tests/freezeml/e1.links",
+      "sha256": "ce82df73a30de843b9b4cf7ac6bce10020a9185aa2303ba957cf7fab534a929d"
+    },
+    {
+      "path": "tests/freezeml/e2.links",
+      "sha256": "51628834cea383cb827d18bd2ec575a3302e691ea49a6dbe1d00ce5445fb0b73"
+    },
+    {
+      "path": "tests/freezeml/e3.links",
+      "sha256": "b29ad05227814a4e7eed6c4358dc599e27f827ef32fc9ab20b9d6c1c8e302fb7"
+    },
+    {
+      "path": "tests/freezeml/e4.links",
+      "sha256": "9d5ce4984343d6e589c66e6e193783e5f9a30e392ba352820cd9689103ff1090"
+    },
+    {
+      "path": "tests/freezeml/session1.links",
+      "sha256": "57fac42809bdeba854a03c77b08c0f962ed751fc4016b0122b1484516bea5a0e"
+    },
+    {
+      "path": "tests/freezeml/session2.links",
+      "sha256": "4cf40b660e78260ccc30f6318cdc35a5fbada5a78235f6987aa0f119147acb26"
+    }
+  ],
+  "test_specifications": {
+    "total": 52,
+    "expected_exit_zero": 42,
+    "expected_exit_nonzero": 10,
+    "ignored": [
+      {
+        "name": "Do not infer polymorphic arguments (3)",
+        "reason": "Failing test case, as Mono kinds get converted to Session."
+      }
+    ]
+  }
+}

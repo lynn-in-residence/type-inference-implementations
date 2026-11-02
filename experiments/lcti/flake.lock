@@ -1,0 +1,45 @@
+{
+  "nodes": {
+    "lcti": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787179215,
+        "narHash": "sha256-e+g+RhD5Bh5K2GmCrQcIO92+vivLWcfCcHlnsbtGAOU=",
+        "owner": "juniorxxue",
+        "repo": "LCTI",
+        "rev": "c3c4634d1f2df5a69cab5fc6fa4cabb568000520",
+        "type": "github"
+      },
+      "original": {
+        "owner": "juniorxxue",
+        "repo": "LCTI",
+        "rev": "c3c4634d1f2df5a69cab5fc6fa4cabb568000520",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1791260994,
+        "narHash": "sha256-Miqqk/ammqnTUxaoCyvtwoPeLbI1ksFyLxi/CazZpWY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "151fa4e8ddfdd8dd25d945ad94ed54a13de9f6e4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "lcti": "lcti",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

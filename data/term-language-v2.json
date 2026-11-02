@@ -1,0 +1,100 @@
+{
+  "schema": "atlas-term-language-v2",
+  "core": [
+    "var",
+    "lambda",
+    "app",
+    "let",
+    "int",
+    "bool",
+    "pair"
+  ],
+  "extensions": {
+    "expression-annotation": [
+      "ann"
+    ],
+    "binder-annotation": [
+      "annotated-lambda"
+    ],
+    "freeze": [
+      "freeze"
+    ],
+    "explicit-type-application": [
+      "type-app"
+    ],
+    "records": [
+      "record",
+      "project"
+    ],
+    "explicit-instantiation": [
+      "inst"
+    ],
+    "explicit-generalization": [
+      "generalize"
+    ]
+  },
+  "typeTags": [
+    "tvar",
+    "Int",
+    "Bool",
+    "arrow",
+    "product",
+    "forall",
+    "record-type",
+    "con"
+  ],
+  "profiles": [
+    {
+      "id": "wand-1987-worked",
+      "origin": "paper",
+      "core": [
+        "var",
+        "lambda",
+        "app"
+      ],
+      "extensions": [],
+      "typeTags": [
+        "tvar",
+        "Int",
+        "Bool",
+        "arrow"
+      ],
+      "context": "monomorphic",
+      "source": "Wand 1987 §2 term/type grammars; §§3–4 worked simply typed calculus; Int/Bool name two permitted basic types",
+      "scope": "Worked calculus only; proposed extensions do not enlarge this row.",
+      "typeConstructors": {}
+    },
+    {
+      "id": "milner-1978-pure-ml-fragment",
+      "origin": "paper",
+      "core": [
+        "var",
+        "lambda",
+        "app",
+        "let",
+        "int",
+        "bool",
+        "pair"
+      ],
+      "extensions": [],
+      "typeTags": [
+        "tvar",
+        "Int",
+        "Bool",
+        "arrow",
+        "product",
+        "forall",
+        "con"
+      ],
+      "typeConstructors": {
+        "List": 1
+      },
+      "context": "prenex",
+      "source": "Milner 1978 §§2,3.4–3.5,4.1; product/list discussion §5(1)",
+      "scope": "Declared pure ML product/list comparison fragment, not just formal Exp; no effects. Modern prenex-scheme notation represents generic variables. Initial contexts are permitted."
+    }
+  ],
+  "annotationTags": [
+    "some"
+  ]
+}

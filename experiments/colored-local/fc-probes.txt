@@ -1,0 +1,7 @@
+:define cltiG : forall a. (int -> a) -> a
+:define cltiH : forall a. (a -> a) -> a
+cltiG (lambda x. x)
+cltiG ((lambda x. x) : int -> int)
+cltiH (lambda x. x)
+cltiH ((lambda x. x) : int -> int)
+:q

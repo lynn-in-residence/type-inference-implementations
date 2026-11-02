@@ -1,0 +1,4 @@
+val p7 : (((a -> ((Top -> a) | a)) -> b) -> ((b -> (b -> c)) -> c))
+val p9 : (((a -> ((Top -> a) | a)) -> ((a -> ((Top -> a) | a)) -> b)) -> b)
+val p10 : (((a -> ((Top -> a) | a)) -> b) -> ((b -> (b -> c)) -> c))
+val p14 : (Top -> (a -> a))

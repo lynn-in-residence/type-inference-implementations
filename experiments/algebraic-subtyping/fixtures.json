@@ -1,0 +1,101 @@
+[
+  {
+    "id": "identity",
+    "source": "fun x -> x",
+    "accepted": true,
+    "simpleFinal": "'a -> 'a",
+    "origin": "TypingTests/basic"
+  },
+  {
+    "id": "twice",
+    "source": "fun f -> fun x -> f (f x)",
+    "accepted": true,
+    "simpleFinal": "('a ∨ 'b -> 'a) -> 'b -> 'a",
+    "origin": "TypingTests/basic; both papers' twice example"
+  },
+  {
+    "id": "twice-constant",
+    "source": "let twice = fun f -> fun x -> f (f x) in twice (fun z -> true)",
+    "accepted": true,
+    "simpleFinal": "⊤ -> bool",
+    "origin": "atlas specialization of twice; MLsub paper §2.4 constant function"
+  },
+  {
+    "id": "record-width",
+    "source": "(fun x -> x.f) {f = 42; extra = true}",
+    "accepted": true,
+    "simpleFinal": "int",
+    "origin": "atlas extra-field extension of TypingTests/records"
+  },
+  {
+    "id": "record-join",
+    "source": "if true then {a = 1; b = true} else {b = false; c = 42}",
+    "accepted": true,
+    "simpleFinal": "{b: bool}",
+    "origin": "TypingTests/records"
+  },
+  {
+    "id": "let-polymorphism",
+    "source": "let f = fun x -> x in {a = f 0; b = f true}",
+    "accepted": true,
+    "simpleFinal": "{a: int, b: bool}",
+    "origin": "TypingTests/let-poly"
+  },
+  {
+    "id": "scope-extrusion",
+    "source": "fun k -> let test = k (fun x -> let tmp = add x 1 in x) in test",
+    "accepted": true,
+    "simpleFinal": "(('a ∧ int -> 'a) -> 'b) -> 'b",
+    "origin": "TypingTests/let-poly; two-sided variable extrusion"
+  },
+  {
+    "id": "self-application",
+    "source": "fun x -> x x",
+    "accepted": true,
+    "simpleFinal": "'a ∧ ('a -> 'b) -> 'b",
+    "origin": "TypingTests/self-app"
+  },
+  {
+    "id": "recursive-record",
+    "source": "let rec recursive_monster = fun x -> {thing = x; self = recursive_monster x} in recursive_monster",
+    "accepted": true,
+    "simpleFinal": "'a -> {self: 'b, thing: 'a} as 'b",
+    "origin": "TypingTests/recursion (from MLsub website)"
+  },
+  {
+    "id": "finite-nesting-regression",
+    "source": "{u = 0; v = {w = {w = 0}}}",
+    "accepted": true,
+    "simpleFinal": "{u: int, v: {w: {w: int}}}",
+    "origin": "Simple-sub §6 reported MLsub simplifier bug; pinned minimization-disabled branch"
+  },
+  {
+    "id": "empty-record",
+    "source": "{}",
+    "accepted": true,
+    "simpleFinal": "{}",
+    "origin": "TypingTests/records; explicitly notes MLsub's Top output",
+    "mlsubParsed": false
+  },
+  {
+    "id": "bad-primitive",
+    "source": "succ true",
+    "accepted": false,
+    "simpleError": "cannot constrain bool <: int",
+    "origin": "TypingTests/booleans"
+  },
+  {
+    "id": "missing-field",
+    "source": "{a = 123; b = true}.c",
+    "accepted": false,
+    "simpleError": "missing field: c in {a: int, b: bool}",
+    "origin": "TypingTests/records"
+  },
+  {
+    "id": "scope-escape-rejected",
+    "source": "(fun k -> k (fun x -> let tmp = add x 1 in x)) (fun f -> f true)",
+    "accepted": false,
+    "simpleError": "cannot constrain bool <: int",
+    "origin": "TypingTests/let-poly"
+  }
+]

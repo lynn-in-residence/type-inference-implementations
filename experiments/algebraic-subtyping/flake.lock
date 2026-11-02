@@ -1,0 +1,63 @@
+{
+  "nodes": {
+    "mlsub": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1591631844,
+        "narHash": "sha256-ZFZtgEtldkgV3yujMxxT4GckuHEXxEK8VoxufcYDxj8=",
+        "owner": "LPTK",
+        "repo": "mlsub",
+        "rev": "fdec44b80cfa5bdc010da9cc012e75a96d0dd19f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LPTK",
+        "repo": "mlsub",
+        "rev": "fdec44b80cfa5bdc010da9cc012e75a96d0dd19f",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1791260994,
+        "narHash": "sha256-Miqqk/ammqnTUxaoCyvtwoPeLbI1ksFyLxi/CazZpWY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "151fa4e8ddfdd8dd25d945ad94ed54a13de9f6e4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "151fa4e8ddfdd8dd25d945ad94ed54a13de9f6e4",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "mlsub": "mlsub",
+        "nixpkgs": "nixpkgs",
+        "simplesub": "simplesub"
+      }
+    },
+    "simplesub": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1628664079,
+        "narHash": "sha256-7BYuLFY8zprwopHYxuhYTJRs5WK1HykKBmSwti0pGxQ=",
+        "owner": "LPTK",
+        "repo": "simple-sub",
+        "rev": "9bae772624c23b52a93c1b226157e16898b4d9db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LPTK",
+        "repo": "simple-sub",
+        "rev": "9bae772624c23b52a93c1b226157e16898b4d9db",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

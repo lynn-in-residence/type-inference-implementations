@@ -1,0 +1,159 @@
+{
+  "scope": "Three hand-built coalescing states and two symbolic constructor-index checks; no term inference or theorem validation",
+  "assertions": 18,
+  "coalescing": {
+    "literalUpperCycle": {
+      "rendered": "(s -> t)",
+      "type": {
+        "kind": "fun",
+        "left": {
+          "kind": "var",
+          "name": "s"
+        },
+        "right": {
+          "kind": "var",
+          "name": "t"
+        }
+      },
+      "trace": [
+        {
+          "variable": "s",
+          "polarity": "-",
+          "bounds": "upper",
+          "count": 0
+        },
+        {
+          "variable": "t",
+          "polarity": "+",
+          "bounds": "lower",
+          "count": 0
+        }
+      ]
+    },
+    "negativePositionControl": {
+      "rendered": "((mu rec_t_neg. (t & (s -> rec_t_neg))) -> s)",
+      "type": {
+        "kind": "fun",
+        "left": {
+          "kind": "mu",
+          "name": "rec_t_neg",
+          "body": {
+            "kind": "meet",
+            "left": {
+              "kind": "var",
+              "name": "t"
+            },
+            "right": {
+              "kind": "fun",
+              "left": {
+                "kind": "var",
+                "name": "s"
+              },
+              "right": {
+                "kind": "var",
+                "name": "rec_t_neg"
+              }
+            }
+          }
+        },
+        "right": {
+          "kind": "var",
+          "name": "s"
+        }
+      },
+      "trace": [
+        {
+          "variable": "t",
+          "polarity": "-",
+          "bounds": "upper",
+          "count": 1
+        },
+        {
+          "variable": "s",
+          "polarity": "+",
+          "bounds": "lower",
+          "count": 0
+        },
+        {
+          "variable": "t",
+          "polarity": "-",
+          "action": "recursive-reference"
+        },
+        {
+          "variable": "s",
+          "polarity": "+",
+          "bounds": "lower",
+          "count": 0
+        }
+      ]
+    },
+    "candidateLowerCycle": {
+      "rendered": "(s -> (mu rec_t_pos. (t | (s -> rec_t_pos))))",
+      "type": {
+        "kind": "fun",
+        "left": {
+          "kind": "var",
+          "name": "s"
+        },
+        "right": {
+          "kind": "mu",
+          "name": "rec_t_pos",
+          "body": {
+            "kind": "union",
+            "left": {
+              "kind": "var",
+              "name": "t"
+            },
+            "right": {
+              "kind": "fun",
+              "left": {
+                "kind": "var",
+                "name": "s"
+              },
+              "right": {
+                "kind": "var",
+                "name": "rec_t_pos"
+              }
+            }
+          }
+        }
+      },
+      "trace": [
+        {
+          "variable": "s",
+          "polarity": "-",
+          "bounds": "upper",
+          "count": 0
+        },
+        {
+          "variable": "t",
+          "polarity": "+",
+          "bounds": "lower",
+          "count": 1
+        },
+        {
+          "variable": "s",
+          "polarity": "-",
+          "bounds": "upper",
+          "count": 0
+        },
+        {
+          "variable": "t",
+          "polarity": "+",
+          "action": "recursive-reference"
+        }
+      ]
+    }
+  },
+  "arrowRouting": {
+    "correct": "((tau0 | tau2) -> (tau1 & tau3))",
+    "printedPage23": "((tau0 | tau2) -> (tau1 & tau2))",
+    "printedPage24": "((tau0 | tau1) -> (tau2 & tau3))"
+  },
+  "evaluation": {
+    "printedTotal": 1313832,
+    "wellTyped": 515509,
+    "illTyped": 798321,
+    "countDifference": 2
+  }
+}

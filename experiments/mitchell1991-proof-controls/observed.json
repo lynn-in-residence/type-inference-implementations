@@ -1,0 +1,168 @@
+{
+  "boundary": "9 one-step metric controls and 1 finite composition counterexample; no UNIFY/MATCH/G/GA execution",
+  "source": "Mitchell JFP1991 §5.2 composition; Appendix Lemmas27/30, pp280/282",
+  "lemma27": {
+    "cases": [
+      {
+        "rhsArrowOccurrences": 1,
+        "remainingCopies": 1,
+        "before": [
+          1,
+          2
+        ],
+        "after": [
+          1,
+          1
+        ],
+        "printedDegreeDecreases": true
+      },
+      {
+        "rhsArrowOccurrences": 1,
+        "remainingCopies": 2,
+        "before": [
+          1,
+          3
+        ],
+        "after": [
+          2,
+          2
+        ],
+        "printedDegreeDecreases": false
+      },
+      {
+        "rhsArrowOccurrences": 1,
+        "remainingCopies": 3,
+        "before": [
+          1,
+          4
+        ],
+        "after": [
+          3,
+          3
+        ],
+        "printedDegreeDecreases": false
+      },
+      {
+        "rhsArrowOccurrences": 2,
+        "remainingCopies": 1,
+        "before": [
+          2,
+          2
+        ],
+        "after": [
+          2,
+          1
+        ],
+        "printedDegreeDecreases": true
+      },
+      {
+        "rhsArrowOccurrences": 2,
+        "remainingCopies": 2,
+        "before": [
+          2,
+          3
+        ],
+        "after": [
+          4,
+          2
+        ],
+        "printedDegreeDecreases": false
+      },
+      {
+        "rhsArrowOccurrences": 2,
+        "remainingCopies": 3,
+        "before": [
+          2,
+          4
+        ],
+        "after": [
+          6,
+          3
+        ],
+        "printedDegreeDecreases": false
+      },
+      {
+        "rhsArrowOccurrences": 3,
+        "remainingCopies": 1,
+        "before": [
+          3,
+          2
+        ],
+        "after": [
+          3,
+          1
+        ],
+        "printedDegreeDecreases": true
+      },
+      {
+        "rhsArrowOccurrences": 3,
+        "remainingCopies": 2,
+        "before": [
+          3,
+          3
+        ],
+        "after": [
+          6,
+          2
+        ],
+        "printedDegreeDecreases": false
+      },
+      {
+        "rhsArrowOccurrences": 3,
+        "remainingCopies": 3,
+        "before": [
+          3,
+          4
+        ],
+        "after": [
+          9,
+          3
+        ],
+        "printedDegreeDecreases": false
+      }
+    ],
+    "concrete": {
+      "input": "{t=s→s,t=u,t=v}",
+      "output": "{s→s=u,s→s=v}",
+      "before": [
+        1,
+        3
+      ],
+      "after": [
+        2,
+        2
+      ]
+    }
+  },
+  "lemma30": {
+    "V": [
+      "a",
+      "b"
+    ],
+    "S": {
+      "a": "x",
+      "b": "y"
+    },
+    "T": {
+      "x": "u",
+      "y": "v",
+      "a": "z",
+      "b": "z"
+    },
+    "SChoosesFreely": true,
+    "TChoosesFreelyOnSRange": true,
+    "printedSAfterT": [
+      "z",
+      "z"
+    ],
+    "printedConclusion": false,
+    "reverseTAfterS": [
+      "u",
+      "v"
+    ],
+    "reverseChoosesFreely": true
+  },
+  "typingInferenceExecuted": false,
+  "unificationExecuted": false,
+  "theoremRecheck": false
+}

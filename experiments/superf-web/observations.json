@@ -1,0 +1,121 @@
+{
+  "schema": "superf-author-web-probes-v1",
+  "revision": "be9ece0d75d11e576f8c15a4f345900626d9138e",
+  "bundleSHA256": "37f3c2a1e57877877e45775dc8fc879b4a8a45d1ef2de667980e39a4ab0c1d24",
+  "implementation": "unchanged author Scala.js bundle, DOM-only Node adapter",
+  "profile": "MLscriptF web demo; noRecursiveTypes=true; fixed initial warmup; no program evaluation",
+  "notCoreColumnExecution": true,
+  "implementationReview": "not-double-checked",
+  "counts": {
+    "accepted": 10,
+    "type-error": 4,
+    "parse-error": 1
+  },
+  "results": [
+    {
+      "id": "identity",
+      "source": "fun x -> x",
+      "outcome": "accepted",
+      "text": "Name Type res forall 'a. 'a -> 'a",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">forall 'a. 'a -> 'a</td>\n  \n</tr>\n</table>"
+    },
+    {
+      "id": "self-application",
+      "source": "fun x -> x x",
+      "outcome": "accepted",
+      "text": "Name Type res forall 'a 'b. ('a -> 'b & 'a) -> 'b",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">forall 'a 'b. ('a -> 'b & 'a) -> 'b</td>\n  \n</tr>\n</table>"
+    },
+    {
+      "id": "two-input-requirements",
+      "source": "fun f -> (f (1:int), f (true:bool))",
+      "outcome": "accepted",
+      "text": "Name Type res forall 'a 'b. (int -> 'a & bool -> 'b) -> ('a, 'b,)",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">forall 'a 'b. (int -> 'a & bool -> 'b) -> ('a, 'b,)</td>\n  \n</tr>\n</table>"
+    },
+    {
+      "id": "two-input-identity-caller",
+      "source": "let foo = fun f -> (f (1:int), f (true:bool)) in foo (fun x -> x)",
+      "outcome": "accepted",
+      "text": "Name Type res (int, bool,)",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">(int, bool,)</td>\n  \n</tr>\n</table>"
+    },
+    {
+      "id": "helper-bottleneck",
+      "source": "fun f -> let g = fun x -> f x in (g (1:int), g (true:bool))",
+      "outcome": "accepted",
+      "text": "Name Type res forall 'a. ((bool | int) -> 'a) -> ('a, 'a,)",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">forall 'a. ((bool | int) -> 'a) -> ('a, 'a,)</td>\n  \n</tr>\n</table>"
+    },
+    {
+      "id": "known-polymorphic-consumer",
+      "source": "def id: forall 'a. 'a -> 'a\ndef choose: forall 'a. 'a -> 'a -> 'a\ndef use: ((forall 'a. 'a -> 'a) -> (forall 'a. 'a -> 'a)) -> int\nuse (fun x -> choose id x)",
+      "outcome": "accepted",
+      "text": "Name Type id forall 'a. 'a -> 'a choose forall 'a. 'a -> 'a -> 'a use ((forall 'a. 'a -> 'a) -> (forall 'a0. 'a0 -> 'a0)) -> int res int",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">id</td>\n  <td class=\"type\">forall 'a. 'a -> 'a</td>\n  \n</tr>\n<tr>\n  <td class=\"name\">choose</td>\n  <td class=\"type\">forall 'a. 'a -> 'a -> 'a</td>\n  \n</tr>\n<tr>\n  <td class=\"name\">use</td>\n  <td class=\"type\">((forall 'a. 'a -> 'a) -> (forall 'a0. 'a0 -> 'a0)) -> int</td>\n  \n</tr>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">int</td>\n  \n</tr>\n</table>"
+    },
+    {
+      "id": "omega",
+      "source": "(fun x -> x x) (fun x -> x x)",
+      "outcome": "type-error",
+      "text": "╔══ [ERROR] Cyclic-looking constraint while typing application; a type annotation may be required ║ l.1: (fun x -> x x) (fun x -> x x) ╙── Note: use flag `:ex` to see internal error info.",
+      "html": "╔══ <strong style=\"color: #E74C3C\">[ERROR]</strong> Cyclic-looking constraint while typing application; a type annotation may be required<br />║  l.1: \t<u style=\"text-decoration: #E74C3C dashed underline\">(fun x -> x x) (fun x -> x x)</u><br />╙── Note: use flag `:ex` to see internal error info.<br />"
+    },
+    {
+      "id": "captured-alias",
+      "source": "fun f -> let a = f in (a (1:int), a (true:bool))",
+      "outcome": "accepted",
+      "text": "Name Type res forall 'a 'b. (int -> 'a & bool -> 'b) -> ('a, 'b,)",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">forall 'a 'b. (int -> 'a & bool -> 'b) -> ('a, 'b,)</td>\n  \n</tr>\n</table>"
+    },
+    {
+      "id": "let-eta-argument",
+      "source": "def use: (forall 'a. 'a -> 'a) -> int\nlet x = fun y -> y in use (fun z -> x z)",
+      "outcome": "accepted",
+      "text": "Name Type use (forall 'a. 'a -> 'a) -> int res int",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">use</td>\n  <td class=\"type\">(forall 'a. 'a -> 'a) -> int</td>\n  \n</tr>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">int</td>\n  \n</tr>\n</table>"
+    },
+    {
+      "id": "lambda-eta-argument",
+      "source": "def use: (forall 'a. 'a -> 'a) -> int\n(fun x -> use (fun z -> x z)) (fun y -> y)",
+      "outcome": "type-error",
+      "text": "╔══ [ERROR] Type error in application ║ l.2: (fun x -> use (fun z -> x z)) (fun y -> y) ╟── type variable `'a` leaks out of its scope ║ l.1: def use: (forall 'a. 'a -> 'a) -> int ╟── back into type variable `'a` ║ l.1: def use: (forall 'a. 'a -> 'a ) -> int ╟── adding a type annotation to any of the following terms may help resolve the problem ╟── • this application: ║ l.2: (fun x -> use (fun z -> x z )) (fun y -> y) ╟── Note: constraint arises from application: ║ l.2: (fun x -> use (fun z -> x z )) (fun y -> y) ╙──",
+      "html": "╔══ <strong style=\"color: #E74C3C\">[ERROR]</strong> Type error in application<br />║  l.2: \t<u style=\"text-decoration: #E74C3C dashed underline\">(fun x -> use (fun z -> x z)) (fun y -> y)</u><br />╟── type variable `'a` leaks out of its scope<br />║  l.1: \tdef use: (forall 'a. <u style=\"text-decoration: #E74C3C dashed underline\">'a</u> -> 'a) -> int<br />╟── back into type variable `'a`<br />║  l.1: \tdef use: (forall 'a. 'a -> <u style=\"text-decoration: #E74C3C dashed underline\">'a</u>) -> int<br />╟── adding a type annotation to any of the following terms may help resolve the problem<br />╟── • this application:<br />║  l.2: \t(fun x -> use (fun z -> <u style=\"text-decoration: #E74C3C dashed underline\">x z</u>)) (fun y -> y)<br />╟── Note: constraint arises from application:<br />║  l.2: \t(fun x -> use (fun z -> <u style=\"text-decoration: #E74C3C dashed underline\">x z</u>)) (fun y -> y)<br />╙──<br />"
+    },
+    {
+      "id": "contracted-lambda-argument",
+      "source": "def use: (forall 'a. 'a -> 'a) -> int\n(fun x -> use x) (fun y -> y)",
+      "outcome": "accepted",
+      "text": "Name Type use (forall 'a. 'a -> 'a) -> int res int",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">use</td>\n  <td class=\"type\">(forall 'a. 'a -> 'a) -> int</td>\n  \n</tr>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">int</td>\n  \n</tr>\n</table>"
+    },
+    {
+      "id": "literal-function-clash",
+      "source": "(1:int) (true:bool)",
+      "outcome": "type-error",
+      "text": "╔══ [ERROR] Type mismatch in application: ║ l.1: (1:int) (true:bool) ╟── type `int` is not a function ║ l.1: (1: int ) (true:bool) ╟── but it flows into applied expression with expected type `bool -> ?a` ║ l.1: (1:int) (true:bool) ╙──",
+      "html": "╔══ <strong style=\"color: #E74C3C\">[ERROR]</strong> Type mismatch in application:<br />║  l.1: \t<u style=\"text-decoration: #E74C3C dashed underline\">(1:int) (true:bool)</u><br />╟── type `int` is not a function<br />║  l.1: \t(1:<u style=\"text-decoration: #E74C3C dashed underline\">int</u>) (true:bool)<br />╟── but it flows into applied expression with expected type `bool -> ?a`<br />║  l.1: \t<u style=\"text-decoration: #E74C3C dashed underline\">(1:int)</u> (true:bool)<br />╙──<br />"
+    },
+    {
+      "id": "unbound-control",
+      "source": "definitely_unbound 1",
+      "outcome": "type-error",
+      "text": "╔══ [ERROR] identifier not found: definitely_unbound ║ l.1: definitely_unbound 1 ╙──",
+      "html": "╔══ <strong style=\"color: #E74C3C\">[ERROR]</strong> identifier not found: definitely_unbound<br />║  l.1: \t<u style=\"text-decoration: #E74C3C dashed underline\">definitely_unbound</u> 1<br />╙──<br />"
+    },
+    {
+      "id": "parse-control",
+      "source": "fun ->",
+      "outcome": "parse-error",
+      "text": "Parse error: Expected (Index ~ let | Index ~ fun | ite | forall | withsAscAs | Index ~ _match | Index ~ adtMatchWith):1:5, found \"->;\" at line 1: fun ->",
+      "html": "Parse error: Expected (Index ~ let | Index ~ fun | ite | forall | withsAscAs | Index ~ _match | Index ~ adtMatchWith):1:5, found \"->;\" at line 1:<BLOCKQUOTE>fun -></BLOCKQUOTE>"
+    },
+    {
+      "id": "helper-bottleneck-identity-caller",
+      "source": "let foo = fun f -> let g = fun x -> f x in (g (1:int), g (true:bool)) in foo (fun x -> x)",
+      "outcome": "accepted",
+      "text": "Name Type res (bool | int, bool | int,)",
+      "html": "<table>\n  <thead>\n    <tr>\n       <td>Name</td>\n       <td>Type</td>\n    </tr>\n  </thead>\n<tr>\n  <td class=\"name\">res</td>\n  <td class=\"type\">(bool | int, bool | int,)</td>\n  \n</tr>\n</table>"
+    }
+  ]
+}

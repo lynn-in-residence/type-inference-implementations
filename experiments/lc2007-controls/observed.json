@@ -1,0 +1,47 @@
+{
+  "source": "LC CS-2006-08 revised 27 July 2007",
+  "origin": "Lynn reconstruction",
+  "review": "not independently double-checked",
+  "scope": "finite staged-variable/link accounting and ordinary simultaneous substitutions",
+  "accountingCases": 72,
+  "examples": [
+    {
+      "m": 1,
+      "p": 0,
+      "n": 3,
+      "kwBeta": 10,
+      "lcBeta": 4,
+      "removedChainLinks": 6
+    },
+    {
+      "m": 1,
+      "p": 0,
+      "n": 64,
+      "kwBeta": 2145,
+      "lcBeta": 65,
+      "removedChainLinks": 2080
+    }
+  ],
+  "substitutionControl": {
+    "instance": "b <= a",
+    "S": {
+      "a": "b",
+      "b": "c"
+    },
+    "local": {
+      "c": "b"
+    },
+    "premiseHolds": true,
+    "domainsDisjoint": true,
+    "simultaneousImageOfA": "b",
+    "SCThenSCPrime": "c",
+    "SCPrimeThenSC": "b",
+    "commute": false,
+    "printedRestrictionFactorization": false,
+    "idempotent": false,
+    "finding": "Disjoint domains alone do not justify the printed Theorem5 proof line; no theorem or algorithm refutation."
+  },
+  "wholeInferencer": false,
+  "authorRuntime": false,
+  "metatheoremRechecked": false
+}

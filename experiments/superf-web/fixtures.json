@@ -1,0 +1,97 @@
+{
+  "schema": "superf-author-web-fixtures-v1",
+  "revision": "be9ece0d75d11e576f8c15a4f345900626d9138e",
+  "bundleSHA256": "37f3c2a1e57877877e45775dc8fc879b4a8a45d1ef2de667980e39a4ab0c1d24",
+  "cases": [
+    {
+      "id": "identity",
+      "source": "fun x -> x",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type res forall 'a. 'a -> 'a"
+    },
+    {
+      "id": "self-application",
+      "source": "fun x -> x x",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type res forall 'a 'b. ('a -> 'b & 'a) -> 'b"
+    },
+    {
+      "id": "two-input-requirements",
+      "source": "fun f -> (f (1:int), f (true:bool))",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type res forall 'a 'b. (int -> 'a & bool -> 'b) -> ('a, 'b,)"
+    },
+    {
+      "id": "two-input-identity-caller",
+      "source": "let foo = fun f -> (f (1:int), f (true:bool)) in foo (fun x -> x)",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type res (int, bool,)"
+    },
+    {
+      "id": "helper-bottleneck",
+      "source": "fun f -> let g = fun x -> f x in (g (1:int), g (true:bool))",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type res forall 'a. ((bool | int) -> 'a) -> ('a, 'a,)"
+    },
+    {
+      "id": "known-polymorphic-consumer",
+      "source": "def id: forall 'a. 'a -> 'a\ndef choose: forall 'a. 'a -> 'a -> 'a\ndef use: ((forall 'a. 'a -> 'a) -> (forall 'a. 'a -> 'a)) -> int\nuse (fun x -> choose id x)",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type id forall 'a. 'a -> 'a choose forall 'a. 'a -> 'a -> 'a use ((forall 'a. 'a -> 'a) -> (forall 'a0. 'a0 -> 'a0)) -> int res int"
+    },
+    {
+      "id": "omega",
+      "source": "(fun x -> x x) (fun x -> x x)",
+      "expectedOutcome": "type-error",
+      "expectedText": "╔══ [ERROR] Cyclic-looking constraint while typing application; a type annotation may be required ║ l.1: (fun x -> x x) (fun x -> x x) ╙── Note: use flag `:ex` to see internal error info."
+    },
+    {
+      "id": "captured-alias",
+      "source": "fun f -> let a = f in (a (1:int), a (true:bool))",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type res forall 'a 'b. (int -> 'a & bool -> 'b) -> ('a, 'b,)"
+    },
+    {
+      "id": "let-eta-argument",
+      "source": "def use: (forall 'a. 'a -> 'a) -> int\nlet x = fun y -> y in use (fun z -> x z)",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type use (forall 'a. 'a -> 'a) -> int res int"
+    },
+    {
+      "id": "lambda-eta-argument",
+      "source": "def use: (forall 'a. 'a -> 'a) -> int\n(fun x -> use (fun z -> x z)) (fun y -> y)",
+      "expectedOutcome": "type-error",
+      "expectedText": "╔══ [ERROR] Type error in application ║ l.2: (fun x -> use (fun z -> x z)) (fun y -> y) ╟── type variable `'a` leaks out of its scope ║ l.1: def use: (forall 'a. 'a -> 'a) -> int ╟── back into type variable `'a` ║ l.1: def use: (forall 'a. 'a -> 'a ) -> int ╟── adding a type annotation to any of the following terms may help resolve the problem ╟── • this application: ║ l.2: (fun x -> use (fun z -> x z )) (fun y -> y) ╟── Note: constraint arises from application: ║ l.2: (fun x -> use (fun z -> x z )) (fun y -> y) ╙──"
+    },
+    {
+      "id": "contracted-lambda-argument",
+      "source": "def use: (forall 'a. 'a -> 'a) -> int\n(fun x -> use x) (fun y -> y)",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type use (forall 'a. 'a -> 'a) -> int res int"
+    },
+    {
+      "id": "literal-function-clash",
+      "source": "(1:int) (true:bool)",
+      "expectedOutcome": "type-error",
+      "expectedText": "╔══ [ERROR] Type mismatch in application: ║ l.1: (1:int) (true:bool) ╟── type `int` is not a function ║ l.1: (1: int ) (true:bool) ╟── but it flows into applied expression with expected type `bool -> ?a` ║ l.1: (1:int) (true:bool) ╙──"
+    },
+    {
+      "id": "unbound-control",
+      "source": "definitely_unbound 1",
+      "expectedOutcome": "type-error",
+      "expectedText": "╔══ [ERROR] identifier not found: definitely_unbound ║ l.1: definitely_unbound 1 ╙──"
+    },
+    {
+      "id": "parse-control",
+      "source": "fun ->",
+      "expectedOutcome": "parse-error",
+      "expectedText": "Parse error: Expected (Index ~ let | Index ~ fun | ite | forall | withsAscAs | Index ~ _match | Index ~ adtMatchWith):1:5, found \"->;\" at line 1: fun ->"
+    },
+    {
+      "id": "helper-bottleneck-identity-caller",
+      "source": "let foo = fun f -> let g = fun x -> f x in (g (1:int), g (true:bool)) in foo (fun x -> x)",
+      "expectedOutcome": "accepted",
+      "expectedText": "Name Type res (bool | int, bool | int,)"
+    }
+  ]
+}
